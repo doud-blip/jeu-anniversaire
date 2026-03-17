@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Gardiennes du Haras Royal ✦ Versailles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --night:     #03060F;
+  --deep:      #060A20;
+  --card:      rgba(5, 9, 28, 0.96);
+  --gold:      #C8A84B;
+  --gold2:     #EDD278;
+  --gold-dim:  rgba(200,168,75,0.15);
+  --gold-glow: rgba(200,168,75,0.4);
+  --rose:      #C96478;
+  --rose-glow: rgba(201,100,120,0.45);
+  --sky:       #6AAFC8;
+  --sky-glow:  rgba(106,175,200,0.4);
+  --cream:     #F3E9D2;
+  --parchment: #EAD9B4;
+  --muted:     rgba(243,233,210,0.5);
+  --ft: 'Cinzel Decorative', serif;
+  --fb: 'Cormorant Garamond', Georgia, serif;
+  --fc: 'Cinzel', serif;
+}
+
+html, body { width:100%; height:100%; overflow:hidden; background:var(--night); color:var(--cream); }
+body { font-family: var(--fb); }
+
+/* ═══════════════════════════════════════════════════
+   BACKGROUND
+═══════════════════════════════════════════════════ */
+#bg { position:fixed; inset:0; pointer-events:none; z-index:0; }
+
+/* ═══════════════════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════════════════ */
+.screen {
+  position:fixed; top:0; right:0; bottom:0; left:0;
+  display:none; flex-direction:column;
+  align-items:center; justify-content:flex-start;
+  padding:clamp(14px,2vw,24px); z-index:10;
+  overflow-y:auto; overflow-x:hidden;
+  scrollbar-width:none; -ms-overflow-style:none;
+  transition:left .2s ease;
+}
+.screen::-webkit-scrollbar { display:none; }
+.screen.active { display:flex; }
+.screen.active > * { flex-shrink:0; }
+.screen-pad { flex:1 0 0; min-height:clamp(8px,2vh,30px); }
+
+/* ═══════════════════════════════════════════════════
+   BAROQUE CARD
+═══════════════════════════════════════════════════ */
+.card {
+  margin-top: clamp(10px,2vh,30px);
+  background: var(--card);
+  border: 1px solid rgba(200,168,75,0.35);
+  border-radius: 2px;
+  padding: clamp(14px,2vw,32px) clamp(16px,3vw,44px);
+  position: relative;
+  max-width: 900px; width:100%;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto; overflow-x: hidden;
+  scrollbar-width: none; -ms-overflow-style: none;
+  box-shadow:
+    0 0 0 4px rgba(200,168,75,0.06),
+    0 0 60px rgba(3,6,15,0.9),
+    inset 0 1px 0 rgba(200,168,75,0.12);
+}
+.card::-webkit-scrollbar { display:none; }
+
+/* Corner ornaments */
+.card::before, .card::after { content:''; position:absolute; width:22px; height:22px; border-color:var(--gold); border-style:solid; opacity:.55; }
+.card::before { top:7px; left:7px; border-width:1.5px 0 0 1.5px; }
+.card::after  { top:7px; right:7px; border-width:1.5px 1.5px 0 0; }
+.card .bot::before, .card .bot::after { content:''; position:absolute; width:22px; height:22px; border-color:var(--gold); border-style:solid; opacity:.55; }
+.card .bot::before { bottom:7px; left:7px; border-width:0 0 1.5px 1.5px; }
+.card .bot::after  { bottom:7px; right:7px; border-width:0 1.5px 1.5px 0; }
+
+/* ═══════════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════════ */
+.t-hero {
+  font-family: var(--ft);
+  font-size: clamp(20px,4vw,52px);
+  font-weight:900; line-height:1.2; text-align:center;
+  background: linear-gradient(160deg, var(--gold2) 0%, var(--cream) 45%, var(--rose) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  filter: drop-shadow(0 2px 18px rgba(200,168,75,0.45));
+}
+.t-eyebrow {
+  font-family:var(--fc); font-size:clamp(8px,1.1vw,11px);
+  letter-spacing:5px; text-transform:uppercase;
+  color:var(--gold); opacity:.8; text-align:center;
+}
+.t-station {
+  font-family: var(--ft);
+  font-size:clamp(16px,3vw,36px); font-weight:700; text-align:center;
+  background: linear-gradient(90deg, var(--gold2), var(--rose));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  filter: drop-shadow(0 0 12px rgba(201,100,120,0.35));
+}
+.t-body {
+  font-family:var(--fb); font-size:clamp(14px,1.8vw,19px);
+  line-height:1.75; color:var(--muted); text-align:center;
+}
+.t-label {
+  font-family:var(--fc); font-size:clamp(8px,1vw,10px);
+  letter-spacing:3px; text-transform:uppercase; color:var(--rose);
+}
+
+/* Decorative divider */
+.hr {
+  display:flex; align-items:center; gap:10px; margin:14px 0;
+  color:var(--gold); opacity:.4; font-size:11px;
+}
+.hr::before, .hr::after {
+  content:''; flex:1; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* ═══════════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════════ */
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:clamp(10px,1.4vw,15px) clamp(20px,3vw,38px);
+  font-family:var(--fc); font-size:clamp(9px,1.2vw,13px);
+  letter-spacing:2.5px; text-transform:uppercase; font-weight:600;
+  border:1.5px solid; border-radius:1px;
+  cursor:pointer; transition:all .25s; position:relative; overflow:hidden;
+  background:transparent;
+}
+.btn::after { content:''; position:absolute; inset:0; background:white; opacity:0; transition:.2s; }
+.btn:hover::after { opacity:.05; }
+.btn:active { transform:scale(.97); }
+
+.btn-gold { border-color:var(--gold); color:var(--gold); box-shadow:0 0 14px var(--gold-glow); }
+.btn-gold:hover { box-shadow:0 0 30px var(--gold-glow); transform:translateY(-1px); }
+.btn-rose { border-color:var(--rose); color:var(--rose); box-shadow:0 0 14px var(--rose-glow); }
+.btn-rose:hover { box-shadow:0 0 30px var(--rose-glow); transform:translateY(-1px); }
+.btn-sky  { border-color:var(--sky); color:var(--sky); box-shadow:0 0 14px var(--sky-glow); }
+.btn-sky:hover  { box-shadow:0 0 30px var(--sky-glow); transform:translateY(-1px); }
+.btn-sm { padding:7px 14px; font-size:9px; }
+
+/* ═══════════════════════════════════════════════════
+   FRAGMENT SIDEBAR — left column, always in-flow
+═══════════════════════════════════════════════════ */
+#frag-sidebar {
+  position:fixed; top:0; left:0; bottom:0;
+  width:72px; z-index:200;
+  background:rgba(4,7,18,.97);
+  border-right:1px solid rgba(200,168,75,.2);
+  display:none; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:10px; padding:14px 0;
+  box-shadow:2px 0 18px rgba(3,6,15,.7);
+}
+#frag-sidebar.show { display:flex; }
+/* When sidebar visible, push all screens right */
+body.sidebar-on .screen { left:72px; }
+
+.fb-lbl {
+  font-family:var(--fc); font-size:7px; letter-spacing:2px;
+  text-transform:uppercase; color:var(--gold);
+  opacity:.6; writing-mode:vertical-rl;
+  text-orientation:mixed; transform:rotate(180deg);
+  margin-bottom:4px;
+}
+.fb-slots { display:flex; flex-direction:column; gap:8px; align-items:center; }
+.fb-slot {
+  width:42px; height:42px;
+  border:1px solid rgba(200,168,75,.2); border-radius:2px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; transition:all .4s; background:rgba(0,0,0,.4);
+  color:rgba(200,168,75,.18);
+}
+.fb-slot-empty::after { content:'·'; font-family:var(--fc); font-size:16px; color:rgba(200,168,75,.2); }
+.fb-slot.lit {
+  border-color:var(--gold); box-shadow:0 0 10px var(--gold-glow);
+  animation:slotReveal .5s cubic-bezier(.17,.89,.32,1.25);
+}
+@keyframes slotReveal { 0%{transform:scale(0) rotateY(180deg);opacity:0} 60%{transform:scale(1.2)} 100%{transform:scale(1)} }
+
+/* Station progress */
+.sprg { display:flex; gap:5px; justify-content:center; margin-bottom:7px; }
+.sd { width:7px; height:7px; border-radius:50%; background:rgba(200,168,75,.15); transition:all .3s; }
+.sd.done { background:var(--gold); box-shadow:0 0 5px var(--gold-glow); }
+.sd.cur  { background:var(--rose); box-shadow:0 0 7px var(--rose-glow); animation:pulse 1.3s infinite; }
+
+/* ═══════════════════════════════════════════════════
+   GM PANEL
+═══════════════════════════════════════════════════ */
+#gm-btn {
+  position:fixed; bottom:14px; right:14px; z-index:500;
+  width:35px; height:35px; border-radius:50%;
+  background:rgba(5,9,28,.85); border:1px solid rgba(200,168,75,.15);
+  color:rgba(200,168,75,.25); font-size:14px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:all .3s;
+}
+#gm-btn:hover { border-color:var(--gold); color:var(--gold); box-shadow:0 0 10px var(--gold-glow); }
+#gm-panel {
+  position:fixed; bottom:58px; right:14px; z-index:499;
+  background:rgba(5,9,28,.99); border:1px solid var(--gold);
+  border-radius:2px; padding:14px; width:230px;
+  display:none; flex-direction:column; gap:5px;
+  box-shadow:0 0 22px var(--gold-glow); max-height:80vh; overflow-y:auto;
+}
+#gm-panel.open { display:flex; }
+.gm-h { font-family:var(--fc); font-size:8px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); text-align:center; padding-bottom:7px; border-bottom:1px solid rgba(200,168,75,.2); }
+.gm-row { display:flex; justify-content:space-between; align-items:center; }
+.gm-lbl { color:var(--muted); font-size:10px; }
+.gm-val { font-family:var(--fc); font-size:11px; color:var(--gold); background:rgba(200,168,75,.08); padding:2px 7px; border-radius:1px; letter-spacing:1px; }
+.gm-nb { background:none; border:1px solid rgba(200,168,75,.1); color:rgba(200,168,75,.3); font-size:9px; padding:4px 8px; cursor:pointer; text-align:left; border-radius:1px; transition:.2s; font-family:var(--fb); }
+.gm-nb:hover { border-color:var(--gold); color:var(--gold); background:rgba(200,168,75,.06); }
+
+/* PARCHEMIN in GM */
+.parch {
+  background:rgba(234,217,180,.06); border:1px dashed rgba(200,168,75,.3);
+  border-radius:2px; padding:10px; font-family:var(--fb);
+  font-size:10px; color:var(--parchment); line-height:1.6;
+}
+.parch strong { color:var(--gold); }
+.parch-row { display:flex; align-items:center; gap:8px; margin:3px 0; }
+.parch-sym { font-size:15px; width:22px; text-align:center; flex-shrink:0; }
+.parch-q   { color:var(--muted); font-style:italic; font-size:9.5px; flex:1; }
+.parch-ans { font-family:var(--fc); color:var(--gold); font-size:10px; white-space:nowrap; }
+
+/* ═══════════════════════════════════════════════════
+   REVEAL BOX
+═══════════════════════════════════════════════════ */
+.reveal-box {
+  background:linear-gradient(135deg,rgba(200,168,75,.08),rgba(201,100,120,.06));
+  border:1px solid rgba(200,168,75,.5); border-radius:2px;
+  padding:16px 24px; text-align:center;
+  box-shadow:0 0 26px var(--gold-glow); display:none;
+  animation:fadeUp .45s ease;
+}
+.reveal-box.show { display:block; }
+.sym-big { font-size:clamp(44px,8vw,74px); display:block; animation:bigReveal .6s cubic-bezier(.17,.89,.32,1.25); }
+@keyframes bigReveal { 0%{transform:scale(0)rotate(360deg);opacity:0} 60%{transform:scale(1.2)rotate(-5deg)} 100%{transform:scale(1)rotate(0)} }
+
+/* ═══════════════════════════════════════════════════
+   MUSIC BAR
+═══════════════════════════════════════════════════ */
+.music-wrap { background:rgba(0,0,0,.5); border:1px solid rgba(201,100,120,.3); border-radius:2px; padding:14px 20px; text-align:center; }
+.mbars { display:flex; gap:4px; align-items:flex-end; justify-content:center; height:40px; margin:10px 0; }
+.mbar { width:7px; background:var(--rose); border-radius:2px 2px 0 0; box-shadow:0 0 6px var(--rose-glow); transition:height .2s ease; }
+
+/* ═══════════════════════════════════════════════════
+   DANCE
+═══════════════════════════════════════════════════ */
+.d-icon { font-size:clamp(48px,9vw,90px); display:block; text-align:center; animation:dIn .3s ease; filter:drop-shadow(0 0 14px var(--rose-glow)); }
+.d-lbl  { font-family:var(--fc); font-size:clamp(14px,2.8vw,28px); letter-spacing:3px; color:var(--rose); text-align:center; text-shadow:0 0 12px var(--rose-glow); }
+@keyframes dIn { from{transform:scale(.4)rotate(-10deg);opacity:0} to{transform:scale(1)rotate(0);opacity:1} }
+.step-dot { width:28px;height:28px;border-radius:50%; border:1px solid rgba(200,168,75,.2); display:flex;align-items:center;justify-content:center; font-size:13px;transition:all .3s;opacity:.3; }
+.step-dot.active{border-color:var(--gold);opacity:1;transform:scale(1.2);box-shadow:0 0 7px var(--gold-glow);}
+.step-dot.done{border-color:var(--sky);opacity:.5;}
+
+/* ═══════════════════════════════════════════════════
+   CUPS
+═══════════════════════════════════════════════════ */
+.cup-w { display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .2s; }
+.cup-w:hover { transform:translateY(-4px); }
+.cup-e { font-size:clamp(34px,6.5vw,58px); display:block; transition:transform .45s,filter .45s; filter:drop-shadow(0 0 6px rgba(200,168,75,.25)); }
+.cup-w.k .cup-e { transform:rotate(100deg)translateX(8px); filter:drop-shadow(0 0 14px var(--rose-glow)); }
+.cup-lbl { font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--muted); }
+
+/* ═══════════════════════════════════════════════════
+   JUMP
+═══════════════════════════════════════════════════ */
+.jump-n {
+  font-family:var(--ft); font-size:clamp(60px,12vw,110px); font-weight:900;
+  color:var(--gold); text-shadow:0 0 35px var(--gold-glow); line-height:1; transition:all .2s;
+}
+.jump-n.done { color:var(--sky); text-shadow:0 0 35px var(--sky-glow); animation:pulse .8s infinite; }
+.prog-bar-wrap { max-width:300px;margin:0 auto;height:7px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden; }
+.prog-bar { height:100%;width:0%;background:linear-gradient(90deg,var(--rose),var(--sky));border-radius:4px;transition:width .3s;box-shadow:0 0 8px var(--sky-glow); }
+
+/* ═══════════════════════════════════════════════════
+   HANGMAN
+═══════════════════════════════════════════════════ */
+.hm-wrap { display:flex;gap:clamp(16px,2.5vw,36px);align-items:flex-start;flex-wrap:wrap;justify-content:center; }
+.hm-part { opacity:0; transition:opacity .35s; }
+.hm-part.show { opacity:1; }
+.word-row { display:flex;gap:clamp(4px,1vw,12px);flex-wrap:wrap;justify-content:center; }
+.lc { display:flex;flex-direction:column;align-items:center;gap:3px;width:clamp(22px,4vw,42px); }
+.lc span { font-family:var(--ft);font-size:clamp(17px,3.5vw,34px);font-weight:700;color:var(--gold);text-shadow:0 0 7px var(--gold-glow);min-height:1em;text-align:center; animation:lPop .4s ease; }
+@keyframes lPop { 0%{transform:scale(0)rotateX(90deg);opacity:0} 60%{transform:scale(1.2)} 100%{transform:scale(1)} }
+.lc .ul { width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 5px var(--gold-glow); }
+.kbd { display:flex;flex-wrap:wrap;gap:5px;max-width:440px;justify-content:center; }
+.key {
+  width:clamp(26px,4.2vw,40px);height:clamp(26px,4.2vw,40px);
+  border:1px solid rgba(200,168,75,.5);background:rgba(200,168,75,.07);
+  color:var(--gold);border-radius:1px;cursor:pointer;
+  font-family:var(--ft);font-size:clamp(10px,1.6vw,15px);font-weight:700;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.key:hover:not(:disabled){background:var(--gold);color:var(--night);box-shadow:0 0 12px var(--gold-glow);}
+.key:disabled{opacity:.15;cursor:default;border-color:rgba(200,168,75,.1);}
+.key.miss{border-color:rgba(201,100,120,.25);color:rgba(201,100,120,.3);}
+
+/* ═══════════════════════════════════════════════════
+   CODE SCREEN — CIPHER REVEAL
+═══════════════════════════════════════════════════ */
+.frag-line {
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(10px,2vw,22px); flex-wrap:wrap; margin:12px 0;
+}
+.frag-card {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  background:rgba(200,168,75,.06); border:1px solid rgba(200,168,75,.2);
+  border-radius:2px; padding:10px 14px; min-width:64px;
+  transition:all .4s; cursor:pointer; position:relative;
+}
+.frag-card.revealed { border-color:var(--gold); box-shadow:0 0 14px var(--gold-glow); }
+.frag-card .fc-sym { font-size:clamp(22px,4vw,38px); transition:all .4s; }
+.frag-card .fc-arrow { font-family:var(--fc); font-size:10px; color:var(--muted); }
+.frag-card .fc-letter {
+  font-family:var(--ft); font-size:clamp(24px,4.5vw,42px); font-weight:900;
+  color:var(--gold2); text-shadow:0 0 14px var(--gold-glow);
+  min-height:1em; min-width:1em; text-align:center;
+  animation:bigReveal .5s cubic-bezier(.17,.89,.32,1.25);
+}
+.frag-card .fc-hint { font-family:var(--fb); font-size:9px; color:var(--muted); font-style:italic; white-space:nowrap; }
+
+.word-display {
+  display:flex; gap:clamp(6px,1.2vw,14px); justify-content:center;
+  margin:14px 0; flex-wrap:wrap;
+}
+.wd-box {
+  width:clamp(40px,7vw,64px); height:clamp(48px,8vw,72px);
+  border-bottom:2px solid rgba(200,168,75,.4);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--ft); font-size:clamp(20px,3.8vw,38px); font-weight:900;
+  color:var(--cream); transition:all .4s;
+}
+.wd-box.lit { color:var(--gold2); text-shadow:0 0 18px var(--gold-glow); border-color:var(--gold); }
+
+/* Final entry */
+.code-inp {
+  width:clamp(42px,7vw,64px); height:clamp(52px,8.5vw,76px);
+  font-family:var(--ft); font-size:clamp(20px,3.5vw,34px); font-weight:700;
+  text-align:center; text-transform:uppercase; letter-spacing:1px;
+  background:rgba(200,168,75,.06); border:1.5px solid rgba(200,168,75,.4);
+  border-radius:1px; color:var(--gold); transition:all .3s;
+}
+.code-inp:focus { outline:none; border-color:var(--sky); box-shadow:0 0 16px var(--sky-glow); }
+.code-inp.ok  { border-color:var(--sky); box-shadow:0 0 18px var(--sky-glow); }
+.code-inp.err { border-color:var(--rose); box-shadow:0 0 18px var(--rose-glow); }
+.shake { animation:shake .4s ease; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-9px)} 40%{transform:translateX(9px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)} }
+
+/* ═══════════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════════ */
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes pulse  { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+@keyframes float  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+@keyframes glow   { 0%,100%{text-shadow:0 0 14px var(--gold-glow)} 50%{text-shadow:0 0 40px var(--gold-glow),0 0 70px rgba(200,168,75,.15)} }
+
+.aFU { animation:fadeUp .6s ease both; }
+.aFI { animation:fadeIn .6s ease both; }
+.aFL { animation:float 3.5s ease-in-out infinite; }
+.aGL { animation:glow 2.5s ease-in-out infinite; }
+.aP  { animation:pulse 1.2s ease-in-out infinite; }
+.d1{animation-delay:.12s} .d2{animation-delay:.27s} .d3{animation-delay:.44s} .d4{animation-delay:.62s}
+
+/* Confetti */
+#conf { position:fixed;inset:0;pointer-events:none;z-index:999;overflow:hidden; }
+.cp { position:absolute;top:-20px;border-radius:2px;animation:cFall linear infinite; }
+@keyframes cFall { to{transform:translateY(105vh)rotate(720deg);opacity:0} }
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div id="conf"></div>
+
+<!-- FRAGMENT BOARD -->
+<div id="frag-sidebar">
+  <span class="fb-lbl">Fragments</span>
+  <div class="fb-slots">
+    <div class="fb-slot fb-slot-empty" id="fs0"></div>
+    <div class="fb-slot fb-slot-empty" id="fs1"></div>
+    <div class="fb-slot fb-slot-empty" id="fs2"></div>
+    <div class="fb-slot fb-slot-empty" id="fs3"></div>
+    <div class="fb-slot fb-slot-empty" id="fs4"></div>
+  </div>
+</div>
+
+<!-- GM BUTTON -->
+<button id="gm-btn" title="Panneau Organisateur">⚜</button>
+<div id="gm-panel">
+  <div class="gm-h">⚜ Organisateur ⚜</div>
+  <div class="gm-row"><span class="gm-lbl">Session active</span><span class="gm-val" id="gm-session-lbl">Or</span></div>
+
+  <div class="gm-row"><span class="gm-lbl">Mot du pendu</span><span class="gm-val">VERSAILLES</span></div>
+  <div class="gm-row"><span class="gm-lbl">Gobelet secret</span><span class="gm-val">D (n°4)</span></div>
+  <div class="gm-row"><span class="gm-lbl">Sauts requis</span><span class="gm-val">10</span></div>
+  <div class="gm-row"><span class="gm-lbl">Formule Royale</span><span class="gm-val">MAGIE</span></div>
+
+  <div class="hr"><span>🎵 Spotify</span></div>
+
+  <!-- ÉTAPE 1 : Client ID (une seule fois) -->
+  <div style="font-size:9px;color:var(--gold);font-family:var(--fc);letter-spacing:1px;margin-bottom:4px;">① Client ID <em style="color:var(--muted);font-family:var(--fb);letter-spacing:0;">(une seule fois)</em></div>
+  <div style="font-size:8.5px;color:var(--muted);margin-bottom:4px;line-height:1.5;">
+    Rendez-vous sur <a href="https://developer.spotify.com/dashboard" target="_blank" style="color:var(--sky);text-decoration:none;">developer.spotify.com/dashboard ↗</a><br>
+    → <strong style="color:var(--cream);">Create app</strong> → nom quelconque → dans "Redirect URIs" tapez exactement :<br><strong style="color:var(--sky);">https://doud-blip.github.io/jeu-anniversaire/anniversaire-escape-game-v4.html</strong> → Save<br>
+    → Copiez le <strong style="color:var(--cream);">Client ID</strong> affiché et collez-le ici :
+  </div>
+  <input id="sp-client-id" type="text" placeholder="Client ID (32 caractères)…"
+    style="width:100%;background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.2);border-radius:1px;color:var(--gold);font-size:9px;padding:5px 7px;font-family:var(--fc);outline:none;box-sizing:border-box;margin-bottom:6px;">
+
+  <!-- ÉTAPE 2 : Connexion -->
+  <div style="font-size:9px;color:var(--gold);font-family:var(--fc);letter-spacing:1px;margin-bottom:4px;">② <strong style="color:var(--cream);">Ouvrez Spotify sur la tablette</strong> et lancez une musique, puis :</div>
+  <button onclick="spotifyLogin()"
+    style="width:100%;background:#1DB954;border:none;color:#000;font-family:var(--fc);font-size:9px;letter-spacing:1px;padding:7px;border-radius:2px;cursor:pointer;font-weight:700;margin-bottom:6px;">
+    ▶ Se connecter à Spotify
+  </button>
+
+  <!-- ÉTAPE 3 : URL de retour -->
+  <div style="font-size:9px;color:var(--gold);font-family:var(--fc);letter-spacing:1px;margin-bottom:4px;">③ Après autorisation, copiez l'URL de la page d'erreur :</div>
+  <div style="font-size:8.5px;color:var(--muted);margin-bottom:4px;line-height:1.5;">
+    Spotify va autoriser puis recharger directement le jeu avec le token installé automatiquement.<br>
+    Copiez <strong style="color:var(--cream);">l'URL entière</strong> de la barre d'adresse et collez-la ici :
+  </div>
+  <input id="sp-redirect-url" type="text" placeholder="https://doud-blip.github.io/jeu-anniversaire/anniversaire-escape-game-v4.html#access_token=…"
+    style="width:100%;background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.2);border-radius:1px;color:var(--gold);font-size:9px;padding:5px 7px;font-family:var(--fc);outline:none;box-sizing:border-box;margin-bottom:4px;"
+    oninput="spotifyExtractToken(this.value)">
+
+  <div id="spotify-status" style="font-size:9px;min-height:12px;margin-bottom:3px;"></div>
+  <div style="font-size:8px;color:rgba(200,168,75,.4);">Token valable 1h · Compte Premium requis</div>
+
+  <input id="spotify-token" type="hidden">
+
+  <div class="hr"><span>Parchemin des Cavalières</span></div>
+  <div class="parch">
+    <div style="text-align:center;font-family:var(--fc);color:var(--gold);font-size:9px;letter-spacing:2px;margin-bottom:7px;">À IMPRIMER / À ÉCRIRE</div>
+    <div style="margin-bottom:6px;font-size:9px;color:var(--muted);font-style:italic;">La 1ère lettre de chaque réponse compose la Formule Royale&nbsp;:</div>
+    <div class="parch-row"><span class="parch-sym">🌸</span><span class="parch-q">«&nbsp;Où le cheval s'entraîne en tournant en rond&nbsp;?&nbsp;»</span><span class="parch-ans">MANÈGE → <strong>M</strong></span></div>
+    <div class="parch-row"><span class="parch-sym">⚜</span><span class="parch-q">«&nbsp;Une cavalière en tenue d'apparat montant de côté&nbsp;?&nbsp;»</span><span class="parch-ans">AMAZONE → <strong>A</strong></span></div>
+    <div class="parch-row"><span class="parch-sym">🌙</span><span class="parch-q">«&nbsp;L'allure la plus rapide après le trot&nbsp;?&nbsp;»</span><span class="parch-ans">GALOP → <strong>G</strong></span></div>
+    <div class="parch-row"><span class="parch-sym">⭐</span><span class="parch-q">«&nbsp;La force qui propulse le cheval en avant en Horse Ball&nbsp;?&nbsp;»</span><span class="parch-ans">IMPULSION → <strong>I</strong></span></div>
+    <div class="parch-row"><span class="parch-sym">💫</span><span class="parch-q">«&nbsp;L'art de monter à cheval en harmonie avec lui&nbsp;?&nbsp;»</span><span class="parch-ans">ÉQUITATION → <strong>E</strong></span></div>
+    <div style="text-align:center;margin-top:8px;color:var(--gold);font-family:var(--fc);font-size:10px;letter-spacing:4px;">M · A · G · I · E</div>
+  </div>
+
+  <div class="hr"><span>Navigation</span></div>
+  <div id="gm-nav" style="display:flex;flex-direction:column;gap:3px;"></div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SCREEN 0 · INTRO
+════════════════════════════════════════════ -->
+<div id="s-intro" class="screen active" style="background:radial-gradient(ellipse at 50% 25%,#101840 0%,var(--night) 65%);justify-content:flex-start;padding-top:clamp(50px,12vh,120px);">
+  <div style="text-align:center;max-width:800px;">
+    <div class="aFL" style="font-size:clamp(28px,6vw,65px);margin-bottom:14px;filter:drop-shadow(0 0 18px var(--gold-glow));">🐴 ⚜ 🐴</div>
+    <h1 class="t-hero aFU" style="margin-bottom:10px;">Les Gardiennes<br>du Haras Royal</h1>
+    <p class="t-eyebrow aFU d1" style="margin-bottom:6px;">✦ Versailles · Chasse au Trésor · Escape Game ✦</p>
+    <p class="t-body aFU d2" style="max-width:520px;margin:0 auto 34px;font-size:clamp(14px,1.9vw,19px);">
+      Une aventure royale pour les plus intrépides<br>cavalières du Royaume de France
+    </p>
+    <div class="aFU d3">
+      <button class="btn btn-gold" onclick="go('s-story')">⚜ &nbsp;Commencer l'Aventure &nbsp;⚜</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SCREEN 1 · HISTOIRE
+════════════════════════════════════════════ -->
+<div id="s-story" class="screen" style="background:radial-gradient(ellipse at 30% 70%,#180C30 0%,var(--night) 65%);">
+  <div class="card" style="max-width:820px;">
+    <div class="bot"></div>
+    <p class="t-eyebrow" style="margin-bottom:14px;">📜 &nbsp;Le Décret Royal &nbsp;📜</p>
+    <div class="t-body" style="text-align:left;max-width:700px;margin:0 auto;font-size:clamp(14px,1.9vw,19px);">
+      <p style="margin-bottom:12px;text-align:center;font-style:italic;color:var(--gold);font-size:clamp(15px,2.1vw,20px);">🌙 Versailles, une nuit sans lune…</p>
+      <p style="margin-bottom:11px;">Les <strong style="color:var(--rose)">Ombres du Palais</strong> ont jeté un sortilège maléfique sur le <strong style="color:var(--gold)">Haras Royal de Versailles</strong>. Les chevaux refusent de galoper, les trompettes se sont tues, et la <strong style="color:var(--gold)">Princesse Élisabeth</strong> est au désespoir.</p>
+      <p style="margin-bottom:11px;">Seule une <strong style="color:var(--gold)">Formule Royale</strong> en 5 lettres, dissimulée dans 5 fragments secrets éparpillés à travers le palais, peut conjurer ce maléfice.</p>
+      <p style="margin-bottom:11px;">La Princesse a fait appel aux plus courageuses cavalières du Royaume : <strong style="color:var(--sky)">Ella, Charlotte et leurs amies</strong> — passionnées d'équitation et amazones du Haras Royal !</p>
+      <p style="margin-bottom:0;font-style:italic;color:var(--muted);font-size:clamp(13px,1.7vw,17px);">🐴 Pour reconstituer la Formule Royale, vous devrez d'abord résoudre le <strong style="color:var(--gold)">Parchemin des Cavalières</strong> remis par les organisateurs, puis affronter les 5 Épreuves des Ombres. À la fin, vous taperez la Formule Royale — le programme fera alors apparaître les lettres une à une pour confirmer votre victoire !</p>
+    </div>
+    <div style="text-align:center;margin-top:22px;">
+      <button class="btn btn-rose" onclick="startGame()">🐴 &nbsp;En selle ! &nbsp;🐴</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SCREEN 2 · ÉPREUVE 1 — CHAISES MUSICALES
+════════════════════════════════════════════ -->
+<div id="s-s1" class="screen" style="background:radial-gradient(ellipse at 60% 40%,#1a0828 0%,var(--night) 60%);">
+  <div class="card" style="max-width:860px;">
+    <div class="bot"></div>
+    <div class="sprg" id="pg1"></div>
+    <p class="t-label" style="margin-bottom:4px;">⚔ Épreuve 1 sur 5 ⚔</p>
+    <div style="text-align:center;font-size:clamp(34px,6.5vw,64px);margin:6px 0;">🎵</div>
+    <p class="t-station" style="margin-bottom:6px;">La Cavalcade Enchantée</p>
+    <div class="hr"><span>♞</span></div>
+    <div style="max-width:430px;margin:0 auto 12px;">
+      <div class="music-wrap">
+        <div id="ms" style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--rose);text-transform:uppercase;margin-bottom:6px;">🎶 Trompettes royales en cours…</div>
+        <div class="mbars" id="mbars">
+          <div class="mbar" style="height:14px"></div><div class="mbar" style="height:28px"></div>
+          <div class="mbar" style="height:20px"></div><div class="mbar" style="height:38px"></div>
+          <div class="mbar" style="height:10px"></div><div class="mbar" style="height:30px"></div>
+          <div class="mbar" style="height:18px"></div><div class="mbar" style="height:35px"></div>
+          <div class="mbar" style="height:12px"></div>
+        </div>
+        <button class="btn btn-rose btn-sm" id="music-btn" onclick="toggleMusic()">⏸ &nbsp;Stopper la musique</button>
+      </div>
+    </div>
+    <p class="t-body" style="font-size:clamp(13px,1.7vw,17px);">
+      🪑 Tournez autour des chaises au rythme des trompettes royales !<br>
+      <span style="color:var(--gold);">Quand la musique s'arrête → asseyez-vous vite !</span><br>
+      La dernière cavalière debout récupère l'indice sous sa chaise 🌸
+    </p>
+    <div class="hr"><span>♞</span></div>
+    <div style="text-align:center;margin-bottom:10px;">
+      <button class="btn btn-gold" onclick="revFrag(1)">🔮 &nbsp;Révéler le Fragment 1</button>
+    </div>
+    <div id="rv1" class="reveal-box">
+      <div class="t-label" style="margin-bottom:5px;">Fragment capturé !</div>
+      <span class="sym-big">🌸</span>
+      <p style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:7px;">CONSIGNEZ CE SYMBOLE SUR VOTRE PARCHEMIN</p>
+    </div>
+    <div style="text-align:center;margin-top:14px;">
+      <button class="btn btn-sky" onclick="go('s-s2')">Épreuve 2 → La Reprise du Manège &nbsp;→</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SCREEN 3 · ÉPREUVE 2 — DANSE / STEP
+════════════════════════════════════════════ -->
+<div id="s-s2" class="screen" style="background:radial-gradient(ellipse at 50% 80%,#1f0a18 0%,var(--night) 60%);">
+  <div class="card" style="max-width:880px;">
+    <div class="bot"></div>
+    <div class="sprg" id="pg2"></div>
+    <p class="t-label" style="margin-bottom:4px;">⚔ Épreuve 2 sur 5 ⚔</p>
+    <div style="text-align:center;font-size:clamp(28px,5vw,54px);margin:6px 0;">💃🕺</div>
+    <p class="t-station" style="margin-bottom:6px;">La Reprise du Manège</p>
+    <div class="hr"><span>♞</span></div>
+
+    <!-- Phase selector -->
+    <div id="d-phase-pick" style="text-align:center;">
+      <div style="background:rgba(200,168,75,0.07);border:1px solid rgba(200,168,75,0.25);border-radius:2px;padding:12px 20px;margin-bottom:14px;max-width:620px;margin-left:auto;margin-right:auto;">
+        <p style="font-family:var(--fc);font-size:clamp(9px,1.3vw,12px);letter-spacing:2px;color:var(--rose);text-transform:uppercase;margin-bottom:8px;">📋 Règle de l'épreuve</p>
+        <p class="t-body" style="font-size:clamp(12px,1.6vw,15px);text-align:left;line-height:1.8;">
+          👁️ <strong style="color:var(--gold);">Une cavalière est désignée</strong> — elle seule regarde la séquence complète sur l'écran, mouvement par mouvement.<br>
+          🐴 Elle <strong style="color:var(--gold);">transmet ensuite la chorégraphie</strong> à toute l'équipe, sans montrer l'écran.<br>
+          💃 Si la <strong style="color:var(--gold);">chorégraphie est bien exécutée</strong> par toutes, les organisateurs dévoilent le fragment !
+        </p>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-rose" onclick="startDancePhase('watch')">👁️ &nbsp;Mode : Cavalière Observatrice</button>
+        <button class="btn btn-sky btn-sm" onclick="startDancePhase('show')">👥 &nbsp;Mode : Montrer à l'équipe</button>
+      </div>
+    </div>
+
+    <!-- Watch phase (single viewer) -->
+    <div id="d-phase-watch" style="display:none;">
+      <div style="background:rgba(201,100,120,0.1);border:1px solid rgba(201,100,120,0.3);border-radius:2px;padding:8px 16px;text-align:center;margin-bottom:10px;">
+        <span style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--rose);text-transform:uppercase;">👁️ Vue réservée à la cavalière observatrice</span>
+      </div>
+      <div style="min-height:clamp(80px,12vw,115px);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:4px 0;">
+        <div id="d-icon-w" class="d-icon" style="display:none;"></div>
+        <div id="d-lbl-w"  class="d-lbl"  style="display:none;margin-top:4px;"></div>
+        <div id="d-sub-w"  style="font-family:var(--fb);font-size:clamp(11px,1.5vw,14px);color:var(--muted);font-style:italic;margin-top:3px;text-align:center;"></div>
+        <div id="d-ctr-w"  style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:3px;"></div>
+      </div>
+      <div id="d-dots" style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button id="d-start" class="btn btn-rose" onclick="startDance()">▶ &nbsp;Démarrer</button>
+        <button id="d-next"  class="btn btn-sky btn-sm" onclick="nextMove()" style="display:none;">⏭ &nbsp;Mouvement suivant</button>
+        <button id="d-reset" class="btn btn-gold btn-sm" onclick="resetDance()" style="display:none;">↺ &nbsp;Recommencer</button>
+      </div>
+      <div style="text-align:center;margin-top:12px;">
+        <button class="btn btn-gold btn-sm" onclick="document.getElementById('d-phase-pick').style.display='block';document.getElementById('d-phase-watch').style.display='none';">← Retour</button>
+      </div>
+    </div>
+
+    <!-- Show phase (display full sequence for team) -->
+    <div id="d-phase-show" style="display:none;">
+      <div style="background:rgba(106,175,200,0.08);border:1px solid rgba(106,175,200,0.25);border-radius:2px;padding:8px 16px;text-align:center;margin-bottom:10px;">
+        <span style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--sky);text-transform:uppercase;">👥 Récapitulatif — Toute l'équipe peut regarder</span>
+      </div>
+      <div id="d-recap" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;"></div>
+      <div style="text-align:center;">
+        <button class="btn btn-gold btn-sm" onclick="document.getElementById('d-phase-pick').style.display='block';document.getElementById('d-phase-show').style.display='none';">← Retour</button>
+      </div>
+    </div>
+
+    <div class="hr"><span>♞</span></div>
+    <div style="text-align:center;margin-bottom:10px;">
+      <button class="btn btn-gold" onclick="revFrag(2)">🔮 &nbsp;Révéler le Fragment 2</button>
+    </div>
+    <div id="rv2" class="reveal-box">
+      <div class="t-label" style="margin-bottom:5px;">Fragment capturé !</div>
+      <span class="sym-big">⚜</span>
+      <p style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:7px;">CONSIGNEZ CE SYMBOLE SUR VOTRE PARCHEMIN</p>
+    </div>
+    <div style="text-align:center;margin-top:14px;">
+      <button class="btn btn-sky" onclick="go('s-s3')">Épreuve 3 → Le Match de Horse Ball &nbsp;→</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SCREEN 4 · ÉPREUVE 3 — GOBELETS
+════════════════════════════════════════════ -->
+<div id="s-s3" class="screen" style="background:radial-gradient(ellipse at 80% 30%,#0a1525 0%,var(--night) 65%);">
+  <div class="card" style="max-width:920px;">
+    <div class="bot"></div>
+    <div class="sprg" id="pg3"></div>
+    <p class="t-label" style="margin-bottom:4px;">⚔ Épreuve 3 sur 5 ⚔</p>
+    <div style="text-align:center;font-size:clamp(28px,5vw,54px);margin:6px 0;">🏆</div>
+    <p class="t-station" style="margin-bottom:6px;">Le Match de Horse Ball</p>
+    <div class="hr"><span>♞</span></div>
+    <p class="t-body" style="font-size:clamp(12px,1.5vw,15px);margin-bottom:10px;">
+      🏇 En Horse Ball, une seule balle peut changer la partie !<br>
+      <span style="color:var(--gold);">Un fragment est caché dans l'un des 7 gobelets. Renversez-les pour le trouver !</span><br>
+      <span style="color:var(--rose);font-size:clamp(10px,1.4vw,13px);">⚠ Vous avez le droit à <strong>2 séries</strong> de 7 tirs. Stratégie et coordination sont vos meilleures armes !</span>
+    </p>
+    <div style="display:flex;gap:16px;justify-content:center;align-items:center;margin-bottom:10px;">
+      <div id="serie-badge" style="font-family:var(--fc);font-size:10px;letter-spacing:2px;padding:5px 14px;border:1px solid var(--gold);color:var(--gold);border-radius:1px;">SÉRIE 1 / 2</div>
+      <div id="tirs-badge" style="font-family:var(--fc);font-size:10px;letter-spacing:2px;padding:5px 14px;border:1px solid rgba(200,168,75,0.3);color:var(--muted);border-radius:1px;">TIRS : 0 / 7</div>
+    </div>
+    <div style="display:flex;gap:clamp(5px,1.5vw,14px);justify-content:center;flex-wrap:wrap;margin:8px 0;" id="cups-row">
+      <div class="cup-w" id="cup1" onclick="knockCup(1)"><span class="cup-e">🥤</span><span class="cup-lbl">A</span></div>
+      <div class="cup-w" id="cup2" onclick="knockCup(2)"><span class="cup-e">🥤</span><span class="cup-lbl">B</span></div>
+      <div class="cup-w" id="cup3" onclick="knockCup(3)"><span class="cup-e">🥤</span><span class="cup-lbl">C</span></div>
+      <div class="cup-w" id="cup4" onclick="knockCup(4)"><span class="cup-e">🥤</span><span class="cup-lbl">D</span></div>
+      <div class="cup-w" id="cup5" onclick="knockCup(5)"><span class="cup-e">🥤</span><span class="cup-lbl">E</span></div>
+      <div class="cup-w" id="cup6" onclick="knockCup(6)"><span class="cup-e">🥤</span><span class="cup-lbl">F</span></div>
+      <div class="cup-w" id="cup7" onclick="knockCup(7)"><span class="cup-e">🥤</span><span class="cup-lbl">G</span></div>
+    </div>
+    <div id="cup-msg" style="text-align:center;font-size:clamp(12px,1.6vw,15px);min-height:22px;color:var(--muted);font-style:italic;margin-bottom:6px;">Renversez un gobelet pour marquer votre tir…</div>
+    <div style="text-align:center;margin-bottom:4px;">
+      <button id="cup-new-serie" class="btn btn-sky btn-sm" onclick="newSerie()">🔄 &nbsp;Passer à la Série 2</button>
+    </div>
+    <div id="rv3" class="reveal-box" style="margin-top:10px;">
+      <div class="t-label" style="margin-bottom:5px;">Fragment capturé !</div>
+      <span class="sym-big" id="rv3-sym">🌙</span>
+      <p style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:7px;">CONSIGNEZ CE SYMBOLE SUR VOTRE PARCHEMIN</p>
+      <div style="text-align:center;margin-top:14px;">
+        <button class="btn btn-sky" onclick="go('s-s4')">Épreuve 4 → Le Grand Parcours &nbsp;→</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SCREEN 5 · ÉPREUVE 4 — GRAND PARCOURS (QUIZ)
+════════════════════════════════════════════ -->
+<div id="s-s4" class="screen" style="background:radial-gradient(ellipse at 50% 0%,#08102A 0%,var(--night) 65%);">
+  <div class="card" style="max-width:860px;">
+    <div class="bot"></div>
+    <div class="sprg" id="pg4"></div>
+    <p class="t-label" style="margin-bottom:4px;">⚔ Épreuve 4 sur 5 ⚔</p>
+    <div style="text-align:center;font-size:clamp(26px,5vw,52px);margin:5px 0;">🏇</div>
+    <p class="t-station" style="margin-bottom:5px;">Le Grand Parcours d'Obstacles</p>
+    <div class="hr"><span>♞</span></div>
+    <p class="t-body" style="font-size:clamp(11px,1.5vw,15px);margin-bottom:10px;">
+      🧠 En show jumping, chaque obstacle est un défi à relever !<br>
+      <span style="color:var(--gold);">Répondez aux questions pour franchir les obstacles un par un.</span><br>
+      <span style="color:var(--rose);font-size:clamp(10px,1.3vw,13px);">⚠ Il faut <strong>7 bonnes réponses</strong> pour valider le parcours et décrocher le fragment.</span>
+    </p>
+
+    <!-- Score bar -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;justify-content:center;">
+      <div style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--muted);">OBSTACLES FRANCHIS</div>
+      <div style="display:flex;gap:5px;" id="q-stars"></div>
+      <div id="q-score-lbl" style="font-family:var(--fc);font-size:11px;letter-spacing:1px;color:var(--gold);">0 / 7</div>
+    </div>
+    <div class="prog-bar-wrap" style="margin-bottom:12px;"><div class="prog-bar" id="q-bar" style="width:0%;"></div></div>
+
+    <!-- Question card -->
+    <div id="q-card" style="background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.22);border-radius:2px;padding:14px 20px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span id="q-cat" style="font-family:var(--fc);font-size:8px;letter-spacing:3px;color:var(--rose);text-transform:uppercase;padding:3px 8px;border:1px solid rgba(201,100,120,0.3);border-radius:1px;"></span>
+        <span id="q-num" style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--muted);"></span>
+      </div>
+      <p id="q-text" class="t-body" style="font-size:clamp(13px,1.8vw,18px);text-align:left;color:var(--cream);margin-bottom:12px;min-height:2em;"></p>
+      <div id="q-answers" style="display:flex;flex-direction:column;gap:6px;"></div>
+    </div>
+
+    <!-- Feedback -->
+    <div id="q-feedback" style="min-height:26px;text-align:center;font-family:var(--fc);font-size:clamp(10px,1.4vw,13px);letter-spacing:2px;margin-bottom:8px;"></div>
+
+    <!-- Next button -->
+    <div style="text-align:center;">
+      <button id="q-next-btn" class="btn btn-sky btn-sm" onclick="qNext()" style="display:none;">→ Obstacle suivant</button>
+      <button id="q-start-btn" class="btn btn-rose" onclick="qStart()">🏇 &nbsp;Démarrer le Parcours</button>
+    </div>
+
+    <div id="q-done" style="display:none;text-align:center;margin-top:8px;color:var(--sky);font-family:var(--fc);font-size:clamp(11px,1.8vw,15px);letter-spacing:3px;text-shadow:0 0 12px var(--sky-glow);animation:pulse .9s infinite;">
+      ✨ PARCOURS SANS FAUTE ! ✨
+    </div>
+
+    <div id="rv4" class="reveal-box" style="margin-top:10px;">
+      <div class="t-label" style="margin-bottom:5px;">Fragment capturé !</div>
+      <span class="sym-big" id="rv4-sym">⭐</span>
+      <p style="font-family:var(--fc);font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:7px;">CONSIGNEZ CE SYMBOLE SUR VOTRE PARCHEMIN</p>
+      <div style="text-align:center;margin-top:14px;">
+        <button class="btn btn-sky" onclick="go('s-s5')">Épreuve 5 → L'Énigme du Palais 💀 &nbsp;→</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SCREEN 6 · ÉPREUVE 5 — PENDU
+════════════════════════════════════════════ -->
+<div id="s-s5" class="screen" style="padding-top:clamp(20px,3vh,50px);" style="background:radial-gradient(ellipse at 20% 60%,#160822 0%,var(--night) 60%);">
+  <div style="width:100%;max-width:900px;">
+    <div class="sprg" id="pg5" style="justify-content:center;margin-bottom:6px;"></div>
+    <p class="t-label" style="text-align:center;margin-bottom:4px;">⚔ Épreuve 5 sur 5 — Finale ⚔</p>
+    <div style="text-align:center;font-size:clamp(28px,5vw,54px);margin:3px 0;">💀</div>
+    <p class="t-station" style="margin-bottom:8px;">L'Énigme du Palais</p>
+    <p class="t-body" style="font-size:clamp(12px,1.6vw,16px);margin-bottom:12px;">
+      Les Ombres ont enchaîné un secret au cœur du palais…<br>
+      <span style="color:var(--gold);">Devinez le mot pour libérer le dernier fragment !</span>
+    </p>
+
+    <div class="hm-wrap" id="hm-wrap">
+      <!-- SVG scaffold -->
+      <div style="flex-shrink:0;text-align:center;">
+        <svg viewBox="0 0 180 230" width="clamp(120px,17vw,170px)" height="clamp(150px,20vw,210px)" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-linecap="round">
+          <g stroke="var(--gold)" stroke-width="2.5" opacity=".7">
+            <line x1="20" y1="220" x2="160" y2="220"/>
+            <line x1="60" y1="220" x2="60"  y2="20"/>
+            <line x1="60" y1="20"  x2="120" y2="20"/>
+            <line x1="120" y1="20" x2="120" y2="48"/>
+          </g>
+          <circle id="hp0" cx="120" cy="65" r="16" stroke="var(--rose)" stroke-width="2" class="hm-part"/>
+          <line   id="hp1" x1="120" y1="81" x2="120" y2="145" stroke="var(--rose)" stroke-width="2" class="hm-part"/>
+          <line   id="hp2" x1="120" y1="100" x2="92" y2="127" stroke="var(--rose)" stroke-width="2" class="hm-part"/>
+          <line   id="hp3" x1="120" y1="100" x2="148" y2="127" stroke="var(--rose)" stroke-width="2" class="hm-part"/>
+          <line   id="hp4" x1="120" y1="145" x2="94"  y2="183" stroke="var(--rose)" stroke-width="2" class="hm-part"/>
+          <line   id="hp5" x1="120" y1="145" x2="146" y2="183" stroke="var(--rose)" stroke-width="2" class="hm-part"/>
+        </svg>
+        <div style="font-family:var(--fc);font-size:10px;letter-spacing:2px;color:var(--muted);">
+          ❤️ Vies : <span id="hm-lives" style="color:var(--rose);">6</span>/6
+        </div>
+      </div>
+
+      <!-- Word + keyboard -->
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;min-width:260px;">
+        <div class="word-row" id="hm-word"></div>
+        <div id="hm-msg" style="min-height:24px;text-align:center;font-size:clamp(13px,1.9vw,17px);"></div>
+        <div class="kbd" id="hm-kbd"></div>
+        <div id="hm-frag" style="display:none;text-align:center;margin-top:4px;">
+          <div class="t-label" style="margin-bottom:4px;">Dernier Fragment !</div>
+          <div id="hm-sym" style="font-size:clamp(32px,6vw,54px);animation:bigReveal .6s ease;">💫</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:12px;">
+      <button id="hm-next" class="btn btn-gold" onclick="go('s-code')" style="display:none;">
+        🔓 &nbsp;Déchiffrer le Parchemin !
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SCREEN 7 · CODE — DÉCHIFFREMENT FINAL
+════════════════════════════════════════════ -->
+<div id="s-code" class="screen" style="background:radial-gradient(ellipse at 50% 45%,#100820 0%,var(--night) 65%);">
+  <div class="card" style="max-width:800px;">
+    <div class="bot"></div>
+    <div style="text-align:center;font-size:clamp(32px,6.5vw,60px);margin-bottom:8px;">📜</div>
+    <p class="t-station" style="margin-bottom:4px;">Le Parchemin Révélé</p>
+    <p class="t-eyebrow" style="margin-bottom:12px;">— La Formule Royale —</p>
+
+    <!-- Step 1: type the formula first -->
+    <p class="t-body" style="font-size:clamp(12px,1.6vw,15px);margin-bottom:10px;">
+      ① Prononcez la Formule Royale à voix haute, puis tapez-la dans les cases :
+    </p>
+    <div style="display:flex;gap:clamp(6px,1.2vw,12px);justify-content:center;margin-bottom:10px;" id="code-row">
+      <input class="code-inp" id="ci0" maxlength="1" oninput="ciIn(0)" onkeydown="ciKey(0,event)" placeholder="·">
+      <input class="code-inp" id="ci1" maxlength="1" oninput="ciIn(1)" onkeydown="ciKey(1,event)" placeholder="·">
+      <input class="code-inp" id="ci2" maxlength="1" oninput="ciIn(2)" onkeydown="ciKey(2,event)" placeholder="·">
+      <input class="code-inp" id="ci3" maxlength="1" oninput="ciIn(3)" onkeydown="ciKey(3,event)" placeholder="·">
+      <input class="code-inp" id="ci4" maxlength="1" oninput="ciIn(4)" onkeydown="ciKey(4,event)" placeholder="·">
+    </div>
+    <div style="text-align:center;margin-bottom:10px;">
+      <button class="btn btn-gold" onclick="checkCode()">✦ &nbsp;Prononcer la Formule &nbsp;✦</button>
+    </div>
+    <div id="code-msg" style="min-height:24px;text-align:center;font-family:var(--fc);font-size:clamp(10px,1.5vw,13px);letter-spacing:2px;margin-bottom:8px;"></div>
+
+    <!-- Step 2: card reveal (shown after correct answer) -->
+    <div id="code-reveal" style="display:none;">
+      <div class="hr"><span>♞</span></div>
+      <p class="t-body" style="font-size:clamp(12px,1.6vw,15px);margin-bottom:10px;">
+        ② Touchez chaque symbole pour confirmer votre Formule lettre par lettre :
+      </p>
+      <div class="frag-line" id="frag-line"><!-- filled by JS --></div>
+      <p class="t-body" style="font-size:clamp(12px,1.6vw,15px);margin:10px 0 6px;">
+        ③ La Formule se dévoile :
+      </p>
+      <div class="word-display" id="word-display">
+        <div class="wd-box" id="wb0"></div>
+        <div class="wd-box" id="wb1"></div>
+        <div class="wd-box" id="wb2"></div>
+        <div class="wd-box" id="wb3"></div>
+        <div class="wd-box" id="wb4"></div>
+      </div>
+      <div style="text-align:center;margin-top:14px;">
+        <button id="victory-btn" class="btn btn-sky" onclick="go('s-victory')" style="display:none;">🏆 &nbsp;Briser le Sortilège !</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SCREEN 8 · VICTOIRE
+════════════════════════════════════════════ -->
+<div id="s-victory" class="screen" style="background:radial-gradient(ellipse at 50% 40%,#1d1040 0%,var(--night) 70%);">
+  <div class="screen-pad"></div>
+  <div style="text-align:center;max-width:840px;">
+    <div class="aP" style="font-size:clamp(30px,5.5vw,66px);margin-bottom:10px;">🐴 ✨ 🏆 ✨ 🐴</div>
+    <h1 class="t-hero" style="font-size:clamp(22px,4.5vw,50px);margin-bottom:8px;">Les Ombres sont dissipées !</h1>
+    <h2 style="font-family:var(--fc);color:var(--gold);font-size:clamp(10px,2vw,20px);text-shadow:0 0 18px var(--gold-glow);margin-bottom:14px;letter-spacing:3px;text-transform:uppercase;">
+      Le Haras Royal est sauvé ! ⚔
+    </h2>
+    <p class="t-body" style="font-size:clamp(13px,1.7vw,18px);max-width:620px;margin:0 auto 16px;line-height:1.8;">
+      Grâce au courage d'<strong style="color:var(--sky)">Ella, Charlotte et leurs amies</strong>,<br>
+      la <strong style="color:var(--gold)">Formule Royale</strong> a brisé le sortilège des Ombres du Palais !<br>
+      La <strong style="color:var(--gold)">Princesse Élisabeth</strong> peut à nouveau faire galoper ses chevaux. 🐴
+    </p>
+
+    <!-- Divider -->
+    <div style="display:flex;align-items:center;gap:10px;margin:12px auto;max-width:500px;opacity:.45;color:var(--gold);">
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);"></div>
+      <span style="font-size:14px;">⚜</span>
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);"></div>
+    </div>
+
+    <!-- NEXT QUEST reveal -->
+    <div style="background:rgba(200,168,75,0.07);border:1px solid rgba(200,168,75,0.35);border-radius:2px;padding:clamp(12px,2vw,22px) clamp(16px,2.5vw,30px);max-width:680px;margin:0 auto 16px;box-shadow:0 0 24px rgba(200,168,75,0.15);">
+      <p style="font-family:var(--fc);font-size:clamp(8px,1.1vw,11px);letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">✦ La Quête Continue ✦</p>
+      <p class="t-body" style="font-size:clamp(12px,1.7vw,17px);text-align:left;line-height:1.9;">
+        🪄 Cherchez dans la maison une <strong style="color:var(--gold)">baguette magique</strong> — elle pointe vers votre prochain indice…
+      </p>
+    </div>
+
+    <p style="color:var(--rose);font-size:clamp(14px,2.5vw,26px);text-shadow:0 0 12px var(--rose-glow);margin-bottom:18px;font-family:var(--ft);letter-spacing:2px;">
+      🎂 Joyeux Anniversaire Ella & Charlotte ! 🎂
+    </p>
+    <button class="btn btn-gold" onclick="go('s-intro')">↺ &nbsp;Rejouer</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+/* ── SESSIONS (Or / Argent / Bronze) ── */
+const SESSIONS = [
+  {
+    name: 'Or', code: 'MAGIE',
+    hangWord: 'VERSAILLES',
+    frags: [
+      { sym:'🌸', letter:'M', hint:'Manège' },
+      { sym:'⚜',  letter:'A', hint:'Amazone' },
+      { sym:'🌙', letter:'G', hint:'Galop' },
+      { sym:'⭐', letter:'I', hint:'Impulsion' },
+      { sym:'💫', letter:'E', hint:'Équitation' },
+    ],
+    moves: [
+      { icon:'➡️', lbl:'PAS À DROITE',   sub:'Un grand pas à droite, pied gauche qui rejoint' },
+      { icon:'⬅️', lbl:'PAS À GAUCHE',   sub:'Un grand pas à gauche, pied droit qui rejoint' },
+      { icon:'👆', lbl:'BRAS EN HAUT',   sub:'Les deux bras montent vers le plafond — CLAP !' },
+      { icon:'🦵', lbl:'GENOU EN AVANT', sub:'Lever le genou droit bien haut, puis le gauche' },
+      { icon:'⬅️➡️', lbl:'STEP LATÉRAL', sub:'2 pas à droite, 2 pas à gauche en rythme' },
+      { icon:'👏', lbl:'DOUBLE CLAP',    sub:'Frapper les mains 2 fois fort, les bras tendus' },
+      { icon:'🔄', lbl:'DEMI-TOUR STEP', sub:'Faire un demi-tour sur place en stepant (2 pas)' },
+      { icon:'🌟', lbl:'POSE ROYALE',    sub:'Jambe droite tendue sur le côté, bras en V — FREEZE !' },
+    ],
+  },
+  {
+    name: 'Argent', code: 'MAGIE',
+    hangWord: 'CHEVALIER',
+    frags: [
+      { sym:'🌺', letter:'M', hint:'Musique' },
+      { sym:'🌸', letter:'A', hint:'Automne' },
+      { sym:'⚡', letter:'G', hint:'Guitare' },
+      { sym:'🔮', letter:'I', hint:'Ivoire' },
+      { sym:'🌊', letter:'E', hint:'Écurie' },
+    ],
+    moves: [
+      { icon:'🙌', lbl:'CLAP HAUT',       sub:'Lever les deux bras et claquer les mains au-dessus de la tête' },
+      { icon:'🦶', lbl:'TALON-POINTE',    sub:'Talon droit en avant, puis pointe — alterner gauche/droite' },
+      { icon:'🔁', lbl:'TOUR COMPLET',    sub:'Pivoter sur soi-même sur 360° en 4 temps' },
+      { icon:'💃', lbl:'HANCHES',         sub:'Balancer les hanches gauche/droite en rythme (2 temps chaque)' },
+      { icon:'✋', lbl:'SNAP & FREEZE',   sub:'Claquer les doigts et rester figé 2 secondes' },
+      { icon:'🏃', lbl:'COURSE STEP',     sub:'4 petits pas rapides sur place comme une course' },
+      { icon:'🤜', lbl:'PUNCH L/R',       sub:'Poing gauche tendu, puis poing droit — alterner × 4' },
+      { icon:'👑', lbl:'COURONNE ROYALE', sub:'Les deux mains forment une couronne au-dessus de la tête — POSE !' },
+    ],
+  },
+  {
+    name: 'Bronze', code: 'MAGIE',
+    hangWord: 'PRINCESSE',
+    frags: [
+      { sym:'🍄', letter:'M', hint:'Miroir' },
+      { sym:'🐚', letter:'A', hint:'Archet' },
+      { sym:'🌿', letter:'G', hint:'Grenier' },
+      { sym:'🦋', letter:'I', hint:'Iris' },
+      { sym:'🎵', letter:'E', hint:'Étrier' },
+    ],
+    moves: [
+      { icon:'⬆️', lbl:'SAUT SUR PLACE',  sub:'Sauter sur place les pieds joints — 4 fois' },
+      { icon:'🌀', lbl:'SPIRALE',          sub:'Tourner en spirale vers le sol puis remonter doucement' },
+      { icon:'🦢', lbl:'AILES DE CYGNE',  sub:'Écarter les bras en arc, puis les refermer lentement' },
+      { icon:'🦴', lbl:'SHAKE ÉPAULES',   sub:"Secouer les épaules d'avant en arrière rapidement × 8" },
+      { icon:'🎯', lbl:'GENOUX-COUDES',   sub:'Genou droit vers coude gauche, alterner × 4 de chaque côté' },
+      { icon:'🧲', lbl:'VAGUE BRAS',      sub:"Une vague part du poignet droit jusqu'à l'épaule gauche" },
+      { icon:'🐎', lbl:'GALOP LATÉRAL',   sub:'3 pas de galop vers la droite, puis 3 vers la gauche' },
+      { icon:'💎', lbl:'DIAMANT',         sub:'Pointer les index en haut, les joindre puis descendre en triangle' },
+    ],
+  },
+];
+
+let SESSION_IDX = 0;  // 0=Or, 1=Argent, 2=Bronze
+let MOVES = SESSIONS[0].moves;  // active moves
+
+/* ── CONFIG (dynamic, rebuilt per session) ── */
+const CFG = {
+  finalCode:   'MAGIE',
+  hangWord:    SESSIONS[0].hangWord,
+  frags:       SESSIONS[0].frags,
+};
+
+function applySession(idx) {
+  SESSION_IDX = idx % SESSIONS.length;
+  const s = SESSIONS[SESSION_IDX];
+  CFG.hangWord  = s.hangWord;
+  CFG.frags     = s.frags;
+  CFG.finalCode = s.code;
+  MOVES = s.moves;
+  // Assign a new random cup secret (1-7)
+  CUP.secret = Math.floor(Math.random() * 7) + 1;
+  // Update GM panel session display
+  const gml = document.getElementById('gm-session-lbl');
+  if (gml) gml.textContent = s.name + ' (mot: ' + s.hangWord + ', gobelet: ' + ['','A','B','C','D','E','F','G'][CUP.secret] + ')';
+
+  // Refresh all reveal-box symbols to match new session
+  ['rv1','rv2','rv3','rv4'].forEach((id, i) => {
+    const box = document.getElementById(id);
+    if (!box) return;
+    box.classList.remove('show');
+    const sb = box.querySelector('.sym-big');
+    if (sb) sb.textContent = CFG.frags[i].sym;
+  });
+  // Fragment 5 = pendu symbol
+  const hmSym = document.getElementById('hm-sym');
+  if (hmSym) hmSym.textContent = CFG.frags[4].sym;
+  // Reset pendu fragment + button
+  const hmf = document.getElementById('hm-frag');
+  if (hmf) hmf.style.display = 'none';
+  const hmn = document.getElementById('hm-next');
+  if (hmn) hmn.style.display = 'none';
+}
+
+/* MOVES defined inside SESSIONS above */
+
+/* ── DANCE PHASE ── */
+function startDancePhase(mode) {
+  document.getElementById('d-phase-pick').style.display = 'none';
+  if (mode === 'watch') {
+    document.getElementById('d-phase-watch').style.display = 'block';
+    resetDance();
+  } else {
+    document.getElementById('d-phase-watch').style.display = 'none';
+    document.getElementById('d-phase-show').style.display = 'block';
+    buildRecap();
+  }
+}
+
+function buildRecap() {
+  const r = document.getElementById('d-recap');
+  r.innerHTML = '';
+  MOVES.forEach((m, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:3px;background:rgba(200,168,75,.07);border:1px solid rgba(200,168,75,.2);border-radius:2px;padding:8px 10px;min-width:80px;';
+    div.innerHTML = `<span style="font-size:clamp(18px,3vw,28px);">${m.icon}</span>
+      <span style="font-family:var(--fc);font-size:8px;letter-spacing:1px;color:var(--gold);text-align:center;">${i+1}. ${m.lbl}</span>
+      <span style="font-family:var(--fb);font-size:9px;color:var(--muted);text-align:center;font-style:italic;max-width:90px;">${m.sub}</span>`;
+    r.appendChild(div);
+  });
+}
+
+/* ── STATE ── */
+const S = {
+  fragRevealed: [false,false,false,false,false],
+  musicOn: true, muInterval: null,
+  dStep: -1,
+  jumps: 0,
+  hm: { wrong:[], guessed:[] },
+  codeRevealed: [false,false,false,false,false],
+};
+
+/* ── NAVIGATION ── */
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const withSidebar = ['s-s1','s-s2','s-s3','s-s4','s-s5','s-code'];
+  const showSidebar = withSidebar.includes(id);
+  document.getElementById('frag-sidebar').classList.toggle('show', showSidebar);
+  document.body.classList.toggle('sidebar-on', showSidebar);
+  if (id === 's-s4')   initQuiz();
+  if (id === 's-s5')   initHM();
+  if (id === 's-code') initCode();
+  if (id === 's-victory') launchConf();
+  if (id === 's-intro') {
+    QUIZ_SEED = Date.now();
+    SESSION_IDX = (SESSION_IDX + 1) % SESSIONS.length;
+    document.getElementById('conf').innerHTML = ''; // stop confetti
+  }
+  buildProgress(id);
+}
+
+function startGame() {
+  // Reset full state for new game
+  S.fragRevealed = [false,false,false,false,false];
+  S.codeRevealed = [false,false,false,false,false];
+  // Reset sidebar slots
+  for (let i=0;i<5;i++) {
+    const sl = document.getElementById('fs'+i);
+    if (sl) { sl.textContent=''; sl.className='fb-slot fb-slot-empty'; }
+  }
+  // Reset CUP state
+  CUP.serie=1; CUP.tirs=0; CUP.found=false;
+  const sb=document.getElementById('serie-badge'); if(sb) sb.textContent='SÉRIE 1 / 2';
+  const tb=document.getElementById('tirs-badge');  if(tb) tb.textContent='TIRS : 0 / 7';
+  document.getElementById('cup-new-serie').style.display='inline-flex';
+  for(let i=1;i<=7;i++){const cup=document.getElementById('cup'+i);if(cup)cup.classList.remove('k');}
+  document.getElementById('cup-msg').innerHTML='Renversez un gobelet pour marquer votre tir…';
+  // Apply current session
+  applySession(SESSION_IDX);
+  go('s-s1');
+  startMu();
+}
+
+/* ── PROGRESS DOTS ── */
+const ORDER = ['s-s1','s-s2','s-s3','s-s4','s-s5'];
+function buildProgress(cur) {
+  ORDER.forEach((sid, si) => {
+    const el = document.getElementById(`pg${si+1}`);
+    if (!el) return;
+    el.innerHTML = '';
+    ORDER.forEach((_,di) => {
+      const d = document.createElement('div');
+      d.className = 'sd' + (di < si ? ' done' : di === si ? ' cur' : '');
+      el.appendChild(d);
+    });
+  });
+}
+
+/* ── GM PANEL ── */
+document.getElementById('gm-btn').onclick = () =>
+  document.getElementById('gm-panel').classList.toggle('open');
+
+const navPages = [
+  ['s-intro','🏠 Intro'],['s-story','📜 Histoire'],
+  ['s-s1','🎵 Épreuve 1'],['s-s2','🐴 Épreuve 2'],
+  ['s-s3','🏆 Épreuve 3'],['s-s4','⭐ Épreuve 4'],
+  ['s-s5','💀 Épreuve 5'],['s-code','📜 Code'],
+  ['s-victory','🎉 Victoire'],
+];
+navPages.forEach(([id,lbl]) => {
+  const b = document.createElement('button');
+  b.className = 'gm-nb'; b.textContent = lbl;
+  b.onclick = () => go(id);
+  document.getElementById('gm-nav').appendChild(b);
+});
+
+/* ── FRAGMENT REVEAL (toggle on re-click) ── */
+function revFrag(n) {
+  const i = n - 1;
+  const box = document.getElementById(`rv${n}`);
+
+  // If already revealed: toggle visibility
+  if (S.fragRevealed[i]) {
+    if (box) box.classList.toggle('show');
+    return;
+  }
+
+  // First reveal
+  S.fragRevealed[i] = true;
+  if (box) box.classList.add('show');
+  const slot = document.getElementById(`fs${i}`);
+  if (slot) {
+    slot.textContent = CFG.frags[i].sym;
+    slot.classList.remove('fb-slot-empty');
+    slot.classList.add('lit');
+  }
+  // Also update the code screen frag cards if already built
+  const fc = document.getElementById(`fc${i}`);
+  if (fc) {
+    const fsym = fc.querySelector('.fc-sym'); if(fsym) fsym.textContent = CFG.frags[i].sym;
+    const fhint = document.getElementById(`fh${i}`); if(fhint) fhint.textContent = CFG.frags[i].hint;
+  }
+  if (n === 5) {
+    const wf = document.getElementById('hm-frag');
+    if (wf) wf.style.display = 'block';
+    const bt = document.getElementById('hm-next');
+    if (bt) bt.style.display = 'inline-flex';
+  }
+}
+
+/* ── FULLSCREEN ── */
+function tryFullscreen() {
+  const el = document.documentElement;
+  try {
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+  } catch(e) {}
+}
+// Attempt fullscreen on first user interaction
+document.addEventListener('click', function onFirstClick() {
+  tryFullscreen();
+  document.removeEventListener('click', onFirstClick);
+}, { once: true });
+
+/* ── MUSIC ── */
+function startMu() {
+  if (S.muInterval) clearInterval(S.muInterval);
+  S.muInterval = setInterval(() => {
+    if (!S.musicOn) return;
+    document.querySelectorAll('#mbars .mbar').forEach(b =>
+      b.style.height = (Math.random()*34+5)+'px');
+  }, 200);
+}
+
+/* ── SPOTIFY INTEGRATION (Implicit Grant) ── */
+let SPOTIFY_TOKEN = '';
+
+function spotifyLogin() {
+  const clientId = document.getElementById('sp-client-id').value.trim();
+  if (!clientId) {
+    const st = document.getElementById('spotify-status');
+    st.textContent = '⚠ Collez d\'abord votre Client ID (étape ①)';
+    st.style.color = 'var(--rose)';
+    return;
+  }
+  const scope    = 'user-modify-playback-state';
+  const redirect = encodeURIComponent('https://doud-blip.github.io/jeu-anniversaire/anniversaire-escape-game-v4.html');
+  const url = `https://accounts.spotify.com/authorize?response_type=token&client_id=${clientId}&scope=${scope}&redirect_uri=${redirect}&show_dialog=true`;
+  window.open(url, '_blank', 'width=480,height=640');
+}
+
+function spotifyExtractToken(url) {
+  const st = document.getElementById('spotify-status');
+  if (!url.includes('access_token=')) {
+    st.textContent = '';
+    return;
+  }
+  try {
+    // Parse token from URL hash or query string
+    const hash = url.includes('#') ? url.split('#')[1] : url.split('?')[1];
+    const params = new URLSearchParams(hash);
+    const token = params.get('access_token');
+    if (token) {
+      SPOTIFY_TOKEN = token;
+      document.getElementById('spotify-token').value = token;
+      st.textContent = '✓ Token extrait ! Bouton ⏸/▶ opérationnel.';
+      st.style.color = 'var(--sky)';
+      // Clear the URL field for security
+      setTimeout(() => {
+        document.getElementById('sp-redirect-url').value = '✓ Token enregistré';
+        document.getElementById('sp-redirect-url').style.color = 'var(--sky)';
+      }, 800);
+    } else {
+      st.textContent = '⚠ Token non trouvé dans l\'URL — réessayez';
+      st.style.color = 'var(--rose)';
+    }
+  } catch(e) {
+    st.textContent = '⚠ URL non reconnue';
+    st.style.color = 'var(--rose)';
+  }
+}
+
+function spotifyTokenChange(val) {
+  SPOTIFY_TOKEN = val.trim();
+}
+
+async function spotifyCall(endpoint, method='PUT') {
+  if (!SPOTIFY_TOKEN) return;
+  try {
+    const res = await fetch('https://api.spotify.com/v1/me/player/' + endpoint, {
+      method,
+      headers: { 'Authorization': 'Bearer ' + SPOTIFY_TOKEN }
+    });
+    const st = document.getElementById('spotify-status');
+    if (res.status === 204 || res.status === 200) {
+      st.textContent = endpoint === 'pause' ? '⏸ Spotify en pause' : '▶ Spotify en lecture';
+      st.style.color = endpoint === 'pause' ? 'var(--rose)' : 'var(--sky)';
+    } else if (res.status === 401) {
+      st.textContent = '⚠ Token expiré — refaites l\'étape ②';
+      st.style.color = 'var(--rose)';
+    } else if (res.status === 403) {
+      st.textContent = '⚠ Compte Premium requis';
+      st.style.color = 'var(--rose)';
+    } else if (res.status === 404) {
+      st.textContent = '⚠ Ouvrez Spotify sur la tablette et lancez une musique';
+      st.style.color = 'var(--rose)';
+    }
+  } catch(e) {
+    const st = document.getElementById('spotify-status');
+    if (st) st.textContent = '⚠ Erreur réseau';
+  }
+}
+
+function toggleMusic() {
+  S.musicOn = !S.musicOn;
+  const btn = document.getElementById('music-btn');
+  const st  = document.getElementById('ms');
+  const bars= document.querySelectorAll('#mbars .mbar');
+  if (S.musicOn) {
+    btn.textContent = '⏸ Stopper la musique';
+    st.textContent  = '🎶 Trompettes royales en cours…'; st.style.color = 'var(--rose)';
+    bars.forEach(b => b.style.transition = 'height .2s ease');
+    spotifyCall('play'); // ▶ Resume Spotify
+  } else {
+    bars.forEach(b => { b.style.height = '4px'; b.style.transition = 'height .6s ease'; });
+    btn.textContent = '▶ Relancer la musique';
+    st.textContent  = '🛑 Musique arrêtée !'; st.style.color = 'var(--sky)';
+    spotifyCall('pause'); // ⏸ Pause Spotify
+  }
+}
+
+/* ── DANCE ── */
+let dStep = -1;
+
+function startDance() {
+  dStep = 0;
+  document.getElementById('d-start').style.display = 'none';
+  document.getElementById('d-next').style.display  = 'inline-flex';
+  document.getElementById('d-reset').style.display = 'inline-flex';
+  buildDots();
+  showMove(0);
+}
+
+function buildDots() {
+  const c = document.getElementById('d-dots');
+  c.innerHTML = '';
+  MOVES.forEach((m, i) => {
+    const d = document.createElement('div');
+    d.id = `dd${i}`; d.className = 'step-dot'; d.textContent = m.icon;
+    c.appendChild(d);
+  });
+}
+
+function showMove(idx) {
+  const ico = document.getElementById('d-icon-w');
+  const lbl = document.getElementById('d-lbl-w');
+  const sub = document.getElementById('d-sub-w');
+  const ctr = document.getElementById('d-ctr-w');
+  if (idx >= MOVES.length) {
+    ico.textContent = '🏆'; ico.style.display = 'block';
+    lbl.textContent = 'CHORÉGRAPHIE COMPLÈTE !'; lbl.style.display = 'block'; lbl.style.color = 'var(--sky)';
+    sub.textContent = 'Mémorise bien tout, puis va enseigner la danse à ton équipe !';
+    ctr.textContent = '';
+    document.getElementById('d-next').style.display = 'none';
+    MOVES.forEach((_,i) => dotCls(i,'done'));
+    return;
+  }
+  const m = MOVES[idx];
+  ico.style.animation = 'none'; ico.offsetHeight;
+  ico.style.animation = 'dIn .3s ease';
+  ico.textContent = m.icon; ico.style.display = 'block';
+  lbl.textContent = m.lbl; lbl.style.display = 'block'; lbl.style.color = 'var(--rose)';
+  sub.textContent = m.sub;
+  ctr.textContent = `Mouvement ${idx+1} / ${MOVES.length}`;
+  MOVES.forEach((_,i) => dotCls(i, i < idx ? 'done' : i === idx ? 'active' : ''));
+}
+
+function dotCls(i, cls) {
+  const d = document.getElementById(`dd${i}`);
+  if (d) d.className = 'step-dot' + (cls ? ' '+cls : '');
+}
+
+function nextMove() { dStep++; showMove(dStep); }
+
+function resetDance() {
+  dStep = -1;
+  ['d-start','d-next','d-reset'].forEach((id, i) =>
+    document.getElementById(id).style.display = i===0 ? 'inline-flex' : 'none');
+  ['d-icon-w','d-lbl-w'].forEach(id => { const e=document.getElementById(id); if(e) e.style.display='none'; });
+  const sw = document.getElementById('d-sub-w'); if(sw) sw.textContent='';
+  const cw = document.getElementById('d-ctr-w'); if(cw) cw.textContent='';
+  document.getElementById('d-dots').innerHTML = '';
+}
+
+/* ── CUPS (7 gobelets, 2 séries) ── */
+const CUP = { secret:4, serie:1, tirs:0, found:false };
+
+function knockCup(n) {
+  if (CUP.found) return;
+  const cup = document.getElementById(`cup${n}`);
+  if (!cup || cup.classList.contains('k')) return;
+  cup.classList.add('k');
+  CUP.tirs++;
+  document.getElementById('tirs-badge').textContent = `TIRS : ${CUP.tirs} / 7`;
+  const msg = document.getElementById('cup-msg');
+  const labels = ['','A','B','C','D','E','F','G'];
+  if (n === CUP.secret) {
+    CUP.found = true;
+    msg.innerHTML = `<span style="color:var(--gold)">🏆 But ! Le fragment était dans le gobelet ${labels[n]} !</span>`;
+    document.getElementById('cup-new-serie').style.display = 'none';
+    setTimeout(() => revFrag(3), 700); // auto-reveal fragment
+  } else if (CUP.tirs >= 7 && CUP.serie >= 2) {
+    const lblEx = ['','A','B','C','D','E','F','G'][CUP.secret];
+    msg.innerHTML = `<span style="color:var(--rose)">Les 2 séries sont épuisées… Les organisateurs vous remettent le fragment du gobelet ${lblEx}.</span>`;
+    setTimeout(() => revFrag(3), 1200);
+  } else {
+    const restants = 7 - CUP.tirs;
+    msg.innerHTML = `<span style="color:var(--muted)">Rien ici… ${restants > 0 ? restants + ' tir(s) restant(s)' : 'série terminée'} — ou passez à la série suivante.</span>`;
+  }
+}
+
+function newSerie() {
+  if (CUP.serie >= 2 || CUP.found) return;
+  CUP.serie = 2; CUP.tirs = 0;
+  document.getElementById('serie-badge').textContent = 'SÉRIE 2 / 2';
+  document.getElementById('tirs-badge').textContent = 'TIRS : 0 / 7';
+  document.getElementById('cup-new-serie').style.display = 'none';
+  document.getElementById('cup-msg').innerHTML = '<span style="color:var(--sky)">Série 2 lancée — 7 nouveaux tirs !</span>';
+  for (let i=1;i<=7;i++) { const c=document.getElementById(`cup${i}`); if(c) c.classList.remove('k'); }
+}
+
+/* ── QUIZ (Épreuve 4) ── */
+/* Seeded LCG random — new seed every adventure, stable within one session */
+let QUIZ_SEED = Date.now();
+function seededRand() {
+  QUIZ_SEED = (QUIZ_SEED * 1664525 + 1013904223) & 0xFFFFFFFF;
+  return (QUIZ_SEED >>> 0) / 0x100000000;
+}
+function seededShuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(seededRand() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const QUIZ = {
+  questions: [
+    { cat:'🔢 Maths',     q:'Quel est le résultat de 7 × 8 ?',                                          ans:['54','56','64','49'],                    ok:1 },
+    { cat:'📖 Français',  q:'Quel est le féminin de « acteur » ?',                                      ans:['actrice','acteure','acteuse','actrisse'],ok:0 },
+    { cat:'🌍 Géographie',q:"Quelle est la capitale de l'Espagne ?",                                    ans:['Barcelone','Séville','Madrid','Lisbonne'],ok:2 },
+    { cat:'🔬 Sciences',  q:'Quelle planète est la plus proche du Soleil ?',                            ans:['Vénus','Mercure','Mars','La Terre'],     ok:1 },
+    { cat:'📚 Histoire',  q:'Quel roi a fait construire le château de Versailles ?',                    ans:['Louis XIV','Henri IV','Napoléon','Louis XVI'], ok:0 },
+    { cat:'🔢 Maths',     q:'Combien font 45 ÷ 9 ?',                                                    ans:['4','6','5','7'],                        ok:2 },
+    { cat:'🌿 Sciences',  q:'De quelle couleur est la chlorophylle dans les feuilles ?',                ans:['Jaune','Bleue','Rouge','Verte'],         ok:3 },
+    { cat:'📖 Français',  q:'Dans la phrase « Le cheval galope », quel est le verbe ?',                 ans:['Le','cheval','galope','aucun'],          ok:2 },
+    { cat:'📚 Histoire',  q:'En quelle année a eu lieu la Révolution française ?',                      ans:['1789','1815','1776','1804'],             ok:0 },
+    { cat:'🔢 Maths',     q:"Quel est le périmètre d'un carré de côté 6 cm ?",                         ans:['12 cm','36 cm','18 cm','24 cm'],        ok:3 },
+    { cat:'🌍 Géographie',q:'Quel est le plus long fleuve de France ?',                                 ans:['La Seine','Le Rhône','La Loire','La Garonne'], ok:2 },
+    { cat:'🐾 Sciences',  q:'Combien de pattes a une araignée ?',                                       ans:['6','10','8','12'],                      ok:2 },
+    { cat:'🔢 Maths',     q:'Combien font 6 × 7 ?',                                                     ans:['36','42','48','56'],                    ok:1 },
+    { cat:'🔢 Maths',     q:'Quel est le double de 36 ?',                                               ans:['62','68','72','78'],                    ok:2 },
+    { cat:'📖 Français',  q:'Quel est le pluriel de « cheval » ?',                                      ans:['chevals','chevaus','cheveaux','chevaux'],ok:3 },
+    { cat:'📖 Français',  q:'Dans « La petite fille chante », quel est le sujet ?',                     ans:['petite','fille','La petite fille','chante'], ok:2 },
+    { cat:'🌍 Géographie',q:'Quelle est la capitale de la France ?',                                    ans:['Lyon','Marseille','Paris','Bordeaux'],   ok:2 },
+    { cat:'🌍 Géographie',q:'Quel est le plus grand désert du monde ?',                                 ans:['Sahara','Gobi','Kalahari','Atacama'],    ok:0 },
+    { cat:'📚 Histoire',  q:'Qui a peint la Joconde ?',                                                 ans:['Picasso','Michel-Ange','Léonard de Vinci','Raphaël'], ok:2 },
+    { cat:'📚 Histoire',  q:'Comment appelait-on les soldats à cheval au Moyen Âge ?',                  ans:['Archers','Chevaliers','Fantassins','Croisés'], ok:1 },
+    { cat:'🔬 Sciences',  q:'Quelle est la planète la plus grande du système solaire ?',                ans:['Saturne','Neptune','Jupiter','Uranus'],  ok:2 },
+    { cat:'🔬 Sciences',  q:'Combien y a-t-il de saisons dans une année ?',                             ans:['2','3','4','6'],                        ok:2 },
+    { cat:'🔢 Maths',     q:'Un rectangle a une longueur de 8 cm et une largeur de 3 cm. Quel est son périmètre ?', ans:['11 cm','22 cm','24 cm','16 cm'], ok:1 },
+    { cat:'🌿 Sciences',  q:"Quel organe chez l'être humain filtre le sang et produit l'urine ?",       ans:['Le foie','Le poumon','Le rein','Le cœur'], ok:2 },
+    { cat:'🔢 Maths',     q:'Combien font 9 × 9 ?',                                                     ans:['72','81','99','90'],                    ok:1 },
+    { cat:'🔢 Maths',     q:'Combien font 63 ÷ 7 ?',                                                    ans:['8','9','7','6'],                        ok:1 },
+    { cat:'🔢 Maths',     q:'Quel est le triple de 15 ?',                                                ans:['30','45','35','40'],                    ok:1 },
+    { cat:'🔢 Maths',     q:'Combien de centimètres y a-t-il dans 2 mètres ?',                          ans:['20 cm','100 cm','200 cm','2000 cm'],    ok:2 },
+    { cat:'🔢 Maths',     q:'Quel est le résultat de 120 ÷ 4 ?',                                        ans:['20','25','30','40'],                    ok:2 },
+    { cat:'📖 Français',  q:'Quel est le contraire de « rapide » ?',                                    ans:['lent','vite','fort','grand'],           ok:0 },
+    { cat:'📖 Français',  q:"Dans « Elle mange une pomme », quel est le complément d'objet ?",          ans:['Elle','mange','une pomme','aucun'],     ok:2 },
+    { cat:'📖 Français',  q:"Quel est l'infinitif du verbe conjugué dans « nous partons » ?",           ans:['partir','partent','parts','part'],      ok:0 },
+    { cat:'📖 Français',  q:"Comment forme-t-on le féminin de « chanteur » ?",                          ans:['chanteuse','chanteure','chantrice','chanteresse'], ok:0 },
+    { cat:'📖 Français',  q:"Quelle est la nature du mot « rapidement » ?",                             ans:['nom','adjectif','adverbe','verbe'],     ok:2 },
+    { cat:'🌍 Géographie',q:'Dans quel pays se trouve la Tour Eiffel ?',                                 ans:['Belgique','Suisse','Italie','France'],  ok:3 },
+    { cat:'🌍 Géographie',q:'Quel est le plus grand océan du monde ?',                                  ans:['Atlantique','Indien','Arctique','Pacifique'], ok:3 },
+    { cat:'🌍 Géographie',q:'Quel fleuve traverse Paris ?',                                              ans:['La Loire','La Seine','Le Rhône','La Garonne'], ok:1 },
+    { cat:'🌍 Géographie',q:'Quel est le plus haut sommet du monde ?',                                   ans:['Mont Blanc','Kilimandjaro','Himalaya',"l'Everest"], ok:3 },
+    { cat:'📚 Histoire',  q:'Quelle reine célèbre vivait à Versailles avec Louis XVI ?',                 ans:['Joséphine','Catherine','Marie-Antoinette','Élisabeth'], ok:2 },
+    { cat:'📚 Histoire',  q:"En quelle année Christophe Colomb a-t-il découvert l'Amérique ?",          ans:['1392','1492','1592','1292'],            ok:1 },
+    { cat:'📚 Histoire',  q:'Quel animal symbolise la royauté française ?',                              ans:["L'aigle",'Le lion','La licorne','Le lys'], ok:1 },
+    { cat:'📚 Histoire',  q:"Comment s'appelait la célèbre demeure des rois de France ?",               ans:['Le Louvre','Fontainebleau','Versailles','Chambord'], ok:2 },
+    { cat:'🔬 Sciences',  q:'De quoi les plantes ont-elles besoin pour fabriquer leur nourriture ?',    ans:['Du vent','De la pluie seule','Lumière, eau et CO2','Du sol uniquement'], ok:2 },
+    { cat:'🔬 Sciences',  q:"Combien d'os y a-t-il environ dans le corps humain adulte ?",              ans:['106','206','306','406'],                ok:1 },
+    { cat:'🔬 Sciences',  q:'Quelle est la vitesse de la lumière (arrondie) ?',                         ans:['100 000 km/s','300 000 km/s','1 000 km/s','30 000 km/s'], ok:1 },
+    { cat:'🐾 Sciences',  q:"Quel est l'animal terrestre le plus rapide ?",                             ans:['Lion','Cheval','Guépard','Autruche'],   ok:2 },
+    { cat:'🎵 Musique',   q:'Combien de cordes a une guitare classique ?',                               ans:['4','5','6','8'],                        ok:2 },
+    { cat:'🎵 Musique',   q:'Quel instrument de musique a des touches blanches et noires ?',            ans:['Violon','Guitare','Piano','Trompette'], ok:2 },
+    { cat:'🎵 Musique',   q:"Comment appelle-t-on quelqu'un qui compose de la musique ?",              ans:['Un musicien','Un compositeur','Un chanteur','Un chef'], ok:1 },
+  ],
+  needed: 7,
+  maxQ: 16,  // max questions before moving on without fragment
+  score: 0,
+  idx: 0,
+  answered: false,
+  order: [],
+};
+
+function initQuiz() {
+  // Full reset of quiz UI — called every time s-s4 is entered
+  QUIZ.score = 0; QUIZ.idx = 0; QUIZ.answered = false;
+  QUIZ.order = seededShuffle([...Array(QUIZ.questions.length).keys()]);
+  const qcard = document.getElementById('q-card');
+  if (qcard) qcard.style.display = 'block';
+  const qdone = document.getElementById('q-done');
+  if (qdone) qdone.style.display = 'none';
+  const qsb = document.getElementById('q-start-btn');
+  if (qsb) qsb.style.display = 'inline-flex';
+  const qnb = document.getElementById('q-next-btn');
+  if (qnb) qnb.style.display = 'none';
+  const qfb = document.getElementById('q-feedback');
+  if (qfb) qfb.textContent = '';
+  const qans = document.getElementById('q-answers');
+  if (qans) qans.innerHTML = '';
+  const qtxt = document.getElementById('q-text');
+  if (qtxt) qtxt.textContent = '';
+  updateQScore();
+}
+
+function qStart() {
+  document.getElementById('q-start-btn').style.display = 'none';
+  document.getElementById('q-done').style.display = 'none';
+  showQuestion();
+}
+
+function updateQScore() {
+  const n = Math.min(QUIZ.score, QUIZ.needed);
+  document.getElementById('q-score-lbl').textContent = `${QUIZ.score} / ${QUIZ.needed}`;
+  document.getElementById('q-bar').style.width = (n / QUIZ.needed * 100) + '%';
+  const stars = document.getElementById('q-stars');
+  stars.innerHTML = '';
+  for (let i=0;i<QUIZ.needed;i++) {
+    const s = document.createElement('span');
+    s.style.cssText = `font-size:clamp(10px,1.5vw,14px);transition:all .3s;opacity:${i<QUIZ.score?1:.2};filter:${i<QUIZ.score?'none':'grayscale(1)'}`;
+    s.textContent = '⭐'; stars.appendChild(s);
+  }
+}
+
+function showQuestion() {
+  if (QUIZ.score >= QUIZ.needed) { qWin(); return; }
+  if (QUIZ.idx >= QUIZ.maxQ) { qFail(); return; } // 16 questions max without enough correct
+  if (QUIZ.idx >= QUIZ.order.length) { QUIZ.idx = 0; } // loop if questions run out
+  const qi = QUIZ.order[QUIZ.idx];
+  const q  = QUIZ.questions[qi];
+  QUIZ.answered = false;
+  document.getElementById('q-cat').textContent = q.cat;
+  document.getElementById('q-num').textContent = `Obstacle ${QUIZ.idx+1} / ${QUIZ.maxQ}`;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('q-feedback').textContent = '';
+  document.getElementById('q-next-btn').style.display = 'none';
+
+  const container = document.getElementById('q-answers');
+  container.innerHTML = '';
+  // Shuffle answer order
+  const order = [...Array(q.ans.length).keys()].sort(() => Math.random() - 0.5);
+  order.forEach(ai => {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-gold';
+    btn.style.cssText = 'width:100%;text-align:left;padding:9px 14px;font-size:clamp(11px,1.6vw,15px);letter-spacing:0.5px;justify-content:flex-start;';
+    btn.textContent = q.ans[ai];
+    btn.onclick = () => answerQ(ai === q.ok, btn, container, q.ans[q.ok]);
+    container.appendChild(btn);
+  });
+}
+
+function answerQ(correct, btn, container, correctAns) {
+  if (QUIZ.answered) return;
+  QUIZ.answered = true;
+  const fb = document.getElementById('q-feedback');
+  Array.from(container.children).forEach(b => b.disabled = true);
+  if (correct) {
+    QUIZ.score++;
+    btn.style.background = 'rgba(106,175,200,0.2)'; btn.style.borderColor = 'var(--sky)'; btn.style.color = 'var(--sky)';
+    fb.innerHTML = `<span style="color:var(--sky);">✓ Obstacle franchi ! (+1)</span>`;
+    updateQScore();
+    if (QUIZ.score >= QUIZ.needed) { setTimeout(qWin, 700); return; }
+  } else {
+    btn.style.background = 'rgba(201,100,120,0.15)'; btn.style.borderColor = 'var(--rose)'; btn.style.color = 'var(--rose)';
+    fb.innerHTML = `<span style="color:var(--rose);">✗ Refus d'obstacle… La bonne réponse était : <strong>${correctAns}</strong></span>`;
+  }
+  QUIZ.idx++;
+  if (QUIZ.score >= QUIZ.needed) {
+    // already handled in answerQ correct branch
+  } else if (QUIZ.idx >= QUIZ.maxQ) {
+    // Reached limit without enough correct answers
+    setTimeout(qFail, 700);
+  } else {
+    document.getElementById('q-next-btn').style.display = 'inline-flex';
+  }
+}
+
+function qNext() {
+  document.getElementById('q-next-btn').style.display = 'none';
+  showQuestion();
+}
+
+function qWin() {
+  document.getElementById('q-card').style.display = 'none';
+  document.getElementById('q-next-btn').style.display = 'none';
+  document.getElementById('q-feedback').textContent = '';
+  document.getElementById('q-done').style.display = 'block';
+  setTimeout(() => revFrag(4), 700); // auto-reveal fragment on quiz win
+}
+
+function qFail() {
+  // 16 questions asked, not enough correct — move on WITHOUT fragment
+  document.getElementById('q-card').style.display = 'none';
+  document.getElementById('q-next-btn').style.display = 'none';
+  document.getElementById('q-feedback').innerHTML =
+    `<span style="color:var(--rose);">Les obstacles ont eu raison de vous… (${QUIZ.score}/${QUIZ.needed}) — continuez la quête !</span>`;
+  const failMsg = document.getElementById('q-done');
+  if (failMsg) {
+    failMsg.style.color = 'var(--rose)';
+    failMsg.textContent = "⏭ Passez à l'épreuve suivante →";
+    failMsg.style.display = 'block';
+    failMsg.style.animation = 'none';
+  }
+  // No revFrag(4) — fragment not earned
+  setTimeout(() => go('s-s5'), 3500);
+}
+
+/* ── HANGMAN ── */
+const HMP = ['hp0','hp1','hp2','hp3','hp4','hp5'];
+
+function initHM() {
+  S.hm = { wrong:[], guessed:[] };
+  HMP.forEach(id => { const e=document.getElementById(id); if(e)e.classList.remove('show'); });
+  document.getElementById('hm-lives').textContent = '6';
+  document.getElementById('hm-msg').textContent = '';
+  document.getElementById('hm-frag').style.display = 'none';
+  document.getElementById('hm-next').style.display = 'none';
+  buildHMWord();
+  buildHMKbd();
+}
+
+function buildHMWord() {
+  const row = document.getElementById('hm-word');
+  row.innerHTML = '';
+  CFG.hangWord.split('').forEach((_, i) => {
+    const c = document.createElement('div');
+    c.className = 'lc';
+    c.innerHTML = `<span id="hl${i}"></span><div class="ul"></div>`;
+    row.appendChild(c);
+  });
+}
+
+function buildHMKbd() {
+  const kbd = document.getElementById('hm-kbd');
+  kbd.innerHTML = '';
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l => {
+    const b = document.createElement('button');
+    b.className = 'key'; b.textContent = l; b.id = `k${l}`;
+    b.onclick = () => guessL(l);
+    kbd.appendChild(b);
+  });
+}
+
+function guessL(l) {
+  if (S.hm.guessed.includes(l) || S.hm.wrong.includes(l)) return;
+  const word = CFG.hangWord;
+  if (word.includes(l)) {
+    S.hm.guessed.push(l);
+    word.split('').forEach((c, i) => {
+      if (c === l) { const e=document.getElementById(`hl${i}`); if(e)e.textContent=l; }
+    });
+    document.getElementById(`k${l}`).disabled = true;
+  } else {
+    S.hm.wrong.push(l);
+    const b = document.getElementById(`k${l}`);
+    b.disabled = true; b.classList.add('miss');
+    const p = document.getElementById(HMP[S.hm.wrong.length-1]);
+    if (p) p.classList.add('show');
+    document.getElementById('hm-lives').textContent = 6 - S.hm.wrong.length;
+  }
+  const won  = word.split('').every(c => S.hm.guessed.includes(c));
+  const lost = S.hm.wrong.length >= 6;
+  const msg  = document.getElementById('hm-msg');
+  if (won) {
+    msg.innerHTML = `<span style="color:var(--sky);font-family:var(--fc);letter-spacing:2px;">🎉 Ombre vaincue ! Bravo les Cavalières !</span>`;
+    revFrag(5);
+    document.querySelectorAll('.key').forEach(b => b.disabled = true);
+  } else if (lost) {
+    word.split('').forEach((c, i) => {
+      const e = document.getElementById(`hl${i}`);
+      if (e && !S.hm.guessed.includes(c)) { e.textContent = c; e.style.color = 'var(--rose)'; }
+    });
+    msg.innerHTML = `<span style="color:var(--rose);">Les Ombres résistent… Le mot était : <strong style="color:var(--rose);">${word}</strong></span><br><span style="font-family:var(--fc);font-size:10px;letter-spacing:2px;color:var(--muted);">Utilisez vos indices pour tenter la Formule Royale…</span>`;
+    // Do NOT reveal fragment — go to code to try and guess with existing clues
+    setTimeout(() => go('s-code'), 3500);
+  }
+}
+
+/* ── CODE SCREEN ── */
+function initCode() {
+  S.codeRevealed = [false,false,false,false,false];
+
+  // Reset inputs — always unlocked, type first
+  for (let i=0;i<5;i++) {
+    const inp = document.getElementById(`ci${i}`);
+    inp.value = ''; inp.className = 'code-inp';
+    inp.disabled = false; inp.style.opacity = '1'; inp.style.cursor = 'text';
+  }
+  document.getElementById('code-msg').textContent = '';
+
+  // Hide reveal section until correct code entered
+  document.getElementById('code-reveal').style.display = 'none';
+
+  // Pre-build the frag cards (hidden until reveal section shown)
+  const fl = document.getElementById('frag-line');
+  fl.innerHTML = '';
+  CFG.frags.forEach((f, i) => {
+    const card = document.createElement('div');
+    card.className = 'frag-card'; card.id = `fc${i}`;
+    card.onclick = () => revealCodeFrag(i);
+    card.innerHTML = `
+      <div class="fc-sym">${f.sym}</div>
+      <div class="fc-arrow">▼</div>
+      <div class="fc-letter" id="fl${i}" style="opacity:.15;font-family:var(--ft)">?</div>
+      <div class="fc-hint" style="opacity:0" id="fh${i}">${f.hint}</div>`;
+    fl.appendChild(card);
+  });
+
+  // Reset word display
+  for (let i=0;i<5;i++) {
+    const w = document.getElementById(`wb${i}`);
+    if (w) { w.textContent = ''; w.classList.remove('lit'); }
+  }
+
+  // Hide victory button
+  const vb = document.getElementById('victory-btn');
+  if (vb) vb.style.display = 'none';
+
+  // Focus first input
+  setTimeout(() => document.getElementById('ci0').focus(), 200);
+}
+
+function revealCodeFrag(i) {
+  if (S.codeRevealed[i]) return;
+  S.codeRevealed[i] = true;
+
+  const card = document.getElementById(`fc${i}`);
+  card.classList.add('revealed');
+
+  const fl = document.getElementById(`fl${i}`);
+  fl.textContent = CFG.frags[i].letter; fl.style.opacity = '1';
+
+  const fh = document.getElementById(`fh${i}`);
+  fh.style.opacity = '1';
+
+  // Fill word box with stagger
+  setTimeout(() => {
+    const wb = document.getElementById(`wb${i}`);
+    if (wb) { wb.textContent = CFG.frags[i].letter; wb.classList.add('lit'); }
+  }, i * 120);
+
+  // Show victory button once all revealed
+  if (S.codeRevealed.every(Boolean)) {
+    setTimeout(() => {
+      const vb = document.getElementById('victory-btn');
+      if (vb) vb.style.display = 'inline-flex';
+    }, 800);
+  }
+}
+
+function ciIn(idx) {
+  const inp = document.getElementById(`ci${idx}`);
+  inp.value = inp.value.toUpperCase().replace(/[^A-Z]/g,'');
+  if (inp.value.length === 1 && idx < 4) document.getElementById(`ci${idx+1}`).focus();
+}
+
+function ciKey(idx, e) {
+  if (e.key === 'Backspace') {
+    const inp = document.getElementById(`ci${idx}`);
+    if (inp.value === '' && idx > 0) document.getElementById(`ci${idx-1}`).focus();
+  }
+  if (e.key === 'Enter') checkCode();
+}
+
+function checkCode() {
+  const entered = [0,1,2,3,4].map(i => document.getElementById(`ci${i}`).value.toUpperCase()).join('');
+  const msg = document.getElementById('code-msg');
+
+  if (entered === CFG.finalCode) {
+    // Lock inputs with success style
+    for (let i=0;i<5;i++) document.getElementById(`ci${i}`).className = 'code-inp ok';
+    msg.innerHTML = `<span style="color:var(--sky);">✨ Formule correcte ! Touchez chaque symbole pour la révéler… ✨</span>`;
+
+    // Show the reveal section
+    const rev = document.getElementById('code-reveal');
+    rev.style.display = 'block';
+    rev.style.animation = 'fadeUp .5s ease';
+
+    // Scroll into view on small screens
+    rev.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  } else {
+    const row = document.getElementById('code-row');
+    row.classList.remove('shake'); void row.offsetWidth; row.classList.add('shake');
+    for (let i=0;i<5;i++) {
+      const inp = document.getElementById(`ci${i}`);
+      inp.className = 'code-inp err';
+      setTimeout(() => inp.className = 'code-inp', 600);
+    }
+    msg.innerHTML = `<span style="color:var(--rose);">❌ Formule incorrecte… Les Ombres résistent encore !</span>`;
+  }
+}
+
+/* ── PARTICLE BACKGROUND ── */
+const cv = document.getElementById('bg');
+const cx = cv.getContext('2d');
+let pts = [], fr = 0;
+
+function rsz() { cv.width = innerWidth; cv.height = innerHeight; }
+window.addEventListener('resize', rsz); rsz();
+
+function mkPt() {
+  const t = Math.random() < 0.55 ? 's' : Math.random() < 0.5 ? 'p' : 'c';
+  return {
+    t, x: Math.random()*cv.width, y: Math.random()*cv.height,
+    sz: t==='s' ? Math.random()*2+0.5 : Math.random()*5+2,
+    vx: (Math.random()-.5)*.22, vy: t==='p' ? Math.random()*.35+.1 : (Math.random()-.5)*.18,
+    op: Math.random()*.55+.12, tw: Math.random()*.016+.004, to: Math.random()*Math.PI*2,
+    rot: Math.random()*Math.PI*2, rv: (Math.random()-.5)*.015,
+    h: t==='s' ? 42+Math.random()*16 : t==='p' ? 18+Math.random()*12 : 200+Math.random()*40,
+  };
+}
+
+for (let i=0;i<120;i++) pts.push(mkPt());
+
+function star4(x,y,r1,r2) {
+  let a=-Math.PI/2; cx.beginPath(); cx.moveTo(x+Math.cos(a)*r1, y+Math.sin(a)*r1);
+  for (let i=0;i<8;i++) { a+=Math.PI/4; const r=i%2===0?r2:r1; cx.lineTo(x+Math.cos(a)*r, y+Math.sin(a)*r); }
+  cx.closePath();
+}
+
+function tick() {
+  cx.clearRect(0,0,cv.width,cv.height); fr++;
+  pts.forEach(p => {
+    p.x+=p.vx; p.y+=p.vy; p.rot+=p.rv;
+    if(p.x<-10)p.x=cv.width+10; if(p.x>cv.width+10)p.x=-10;
+    if(p.y>cv.height+10)p.y=-10; if(p.y<-10)p.y=cv.height+10;
+    const tw=(Math.sin(fr*p.tw+p.to)+1)/2;
+    const al=p.op*(0.2+tw*.8);
+    const col=`hsla(${p.h},80%,72%,${al})`;
+    cx.save(); cx.translate(p.x,p.y); cx.rotate(p.rot);
+    cx.fillStyle=col; cx.shadowColor=col; cx.shadowBlur=6;
+    if(p.t==='s') { star4(0,0,p.sz,p.sz*.4); cx.fill(); }
+    else if(p.t==='p') { cx.beginPath(); cx.ellipse(0,0,p.sz*.4,p.sz,0,0,Math.PI*2); cx.fill(); }
+    else { cx.fillRect(-p.sz*.07,-p.sz*.5,p.sz*.14,p.sz); cx.fillRect(-p.sz*.5,-p.sz*.07,p.sz,p.sz*.14); }
+    cx.restore();
+  });
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* ── CONFETTI ── */
+function launchConf() {
+  const l = document.getElementById('conf'); l.innerHTML = '';
+  const colors = ['#D4A853','#EDD278','#C96478','#6AAFC8','#C8A84B','#F3E9D2','#A87C4F'];
+  for (let i=0;i<100;i++) {
+    const e = document.createElement('div');
+    const c = colors[i%colors.length];
+    const sz = Math.random()*10+5;
+    e.className = 'cp';
+    e.style.cssText = `left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${c};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${(Math.random()*3+2).toFixed(2)}s;animation-delay:${(Math.random()*4).toFixed(2)}s;box-shadow:0 0 4px ${c};`;
+    l.appendChild(e);
+  }
+}
+</script>
+</body>
+</html>
