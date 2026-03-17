@@ -419,7 +419,7 @@ body.sidebar-on .screen { left:72px; }
     → <strong style="color:var(--cream);">Create app</strong> → nom quelconque → dans "Redirect URIs" tapez exactement :<br><strong style="color:var(--sky);">https://doud-blip.github.io/jeu-anniversaire/anniversaire-escape-game-v4.html</strong> → Save<br>
     → Copiez le <strong style="color:var(--cream);">Client ID</strong> affiché et collez-le ici :
   </div>
-  <input id="sp-client-id" type="text" placeholder="Client ID (32 caractères)…"
+  <input id="sp-client-id" type="text" placeholder="Client ID (32 caractères)…" value="ecd2401604bc4fc28f9f4252b2f99ba9"
     style="width:100%;background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.2);border-radius:1px;color:var(--gold);font-size:9px;padding:5px 7px;font-family:var(--fc);outline:none;box-sizing:border-box;margin-bottom:6px;">
 
   <!-- ÉTAPE 2 : Connexion -->
@@ -1153,7 +1153,7 @@ function startMu() {
 let SPOTIFY_TOKEN = '';
 
 function spotifyLogin() {
-  const clientId = document.getElementById('sp-client-id').value.trim();
+  const clientId = document.getElementById('sp-client-id').value.trim() || 'ecd2401604bc4fc28f9f4252b2f99ba9';
   if (!clientId) {
     const st = document.getElementById('spotify-status');
     st.textContent = '⚠ Collez d\'abord votre Client ID (étape ①)';
