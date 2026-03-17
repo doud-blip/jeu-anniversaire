@@ -412,37 +412,26 @@ body.sidebar-on .screen { left:72px; }
 
   <div class="hr"><span>🎵 Spotify</span></div>
 
-  <!-- ÉTAPE 1 : Client ID (une seule fois) -->
-  <div style="font-size:9px;color:var(--gold);font-family:var(--fc);letter-spacing:1px;margin-bottom:4px;">① Client ID <em style="color:var(--muted);font-family:var(--fb);letter-spacing:0;">(une seule fois)</em></div>
-  <div style="font-size:8.5px;color:var(--muted);margin-bottom:4px;line-height:1.5;">
-    Rendez-vous sur <a href="https://developer.spotify.com/dashboard" target="_blank" style="color:var(--sky);text-decoration:none;">developer.spotify.com/dashboard ↗</a><br>
-    → <strong style="color:var(--cream);">Create app</strong> → nom quelconque → dans "Redirect URIs" tapez exactement :<br><strong style="color:var(--sky);">https://doud-blip.github.io/jeu-anniversaire/anniversaire-escape-game-v4.html</strong> → Save<br>
-    → Copiez le <strong style="color:var(--cream);">Client ID</strong> affiché et collez-le ici :
-  </div>
-  <input id="sp-client-id" type="text" placeholder="Client ID (32 caractères)…" value="ecd2401604bc4fc28f9f4252b2f99ba9"
-    style="width:100%;background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.2);border-radius:1px;color:var(--gold);font-size:9px;padding:5px 7px;font-family:var(--fc);outline:none;box-sizing:border-box;margin-bottom:6px;">
+  <!-- Client ID pré-intégré (masqué) -->
+  <input id="sp-client-id" type="hidden" value="ecd2401604bc4fc28f9f4252b2f99ba9">
 
-  <!-- ÉTAPE 2 : Connexion -->
-  <div style="font-size:9px;color:var(--gold);font-family:var(--fc);letter-spacing:1px;margin-bottom:4px;">② <strong style="color:var(--cream);">Ouvrez Spotify sur la tablette</strong> et lancez une musique, puis :</div>
+  <!-- ÉTAPE unique : Connexion -->
+  <div style="font-size:9px;color:var(--gold);font-family:var(--fc);letter-spacing:1px;margin-bottom:5px;">
+    <strong style="color:var(--cream);">① Ouvrez Spotify</strong> sur la tablette et lancez une musique<br>
+    <strong style="color:var(--cream);">② Cliquez le bouton</strong> ci-dessous :
+  </div>
   <button onclick="spotifyLogin()"
-    style="width:100%;background:#1DB954;border:none;color:#000;font-family:var(--fc);font-size:9px;letter-spacing:1px;padding:7px;border-radius:2px;cursor:pointer;font-weight:700;margin-bottom:6px;">
+    style="width:100%;background:#1DB954;border:none;color:#000;font-family:var(--fc);font-size:9px;letter-spacing:1px;padding:8px;border-radius:2px;cursor:pointer;font-weight:700;margin-bottom:6px;">
     ▶ Se connecter à Spotify
   </button>
-
-  <!-- ÉTAPE 3 : URL de retour -->
-  <div style="font-size:9px;color:var(--gold);font-family:var(--fc);letter-spacing:1px;margin-bottom:4px;">③ Après autorisation, copiez l'URL de la page d'erreur :</div>
-  <div style="font-size:8.5px;color:var(--muted);margin-bottom:4px;line-height:1.5;">
-    Spotify va autoriser puis recharger directement le jeu avec le token installé automatiquement.<br>
-    Copiez <strong style="color:var(--cream);">l'URL entière</strong> de la barre d'adresse et collez-la ici :
+  <div style="font-size:8.5px;color:var(--muted);line-height:1.5;margin-bottom:5px;">
+    Une fenêtre Spotify s'ouvre → autorisez → la page se recharge automatiquement avec le token installé.
   </div>
-  <input id="sp-redirect-url" type="text" placeholder="https://doud-blip.github.io/jeu-anniversaire/anniversaire-escape-game-v4.html#access_token=…"
-    style="width:100%;background:rgba(200,168,75,.06);border:1px solid rgba(200,168,75,.2);border-radius:1px;color:var(--gold);font-size:9px;padding:5px 7px;font-family:var(--fc);outline:none;box-sizing:border-box;margin-bottom:4px;"
-    oninput="spotifyExtractToken(this.value)">
 
   <div id="spotify-status" style="font-size:9px;min-height:12px;margin-bottom:3px;"></div>
   <div style="font-size:8px;color:rgba(200,168,75,.4);">Token valable 1h · Compte Premium requis</div>
-
   <input id="spotify-token" type="hidden">
+  <input id="sp-code-verifier" type="hidden">
 
   <div class="hr"><span>Parchemin des Cavalières</span></div>
   <div class="parch">
@@ -1149,57 +1138,92 @@ function startMu() {
   }, 200);
 }
 
-/* ── SPOTIFY INTEGRATION (Implicit Grant) ── */
+/* ── SPOTIFY INTEGRATION (PKCE) ── */
 let SPOTIFY_TOKEN = '';
+const SP_REDIRECT  = 'https://doud-blip.github.io/jeu-anniversaire/anniversaire-escape-game-v4.html';
+const SP_CLIENT_ID = 'ecd2401604bc4fc28f9f4252b2f99ba9';
 
-function spotifyLogin() {
-  const clientId = document.getElementById('sp-client-id').value.trim() || 'ecd2401604bc4fc28f9f4252b2f99ba9';
-  if (!clientId) {
-    const st = document.getElementById('spotify-status');
-    st.textContent = '⚠ Collez d\'abord votre Client ID (étape ①)';
-    st.style.color = 'var(--rose)';
-    return;
-  }
-  const scope    = 'user-modify-playback-state';
-  const redirect = encodeURIComponent('https://doud-blip.github.io/jeu-anniversaire/anniversaire-escape-game-v4.html');
-  const url = `https://accounts.spotify.com/authorize?response_type=token&client_id=${clientId}&scope=${scope}&redirect_uri=${redirect}&show_dialog=true`;
-  window.open(url, '_blank', 'width=480,height=640');
+/* Generate cryptographic random string */
+function spRandom(len) {
+  const arr = new Uint8Array(len);
+  crypto.getRandomValues(arr);
+  return Array.from(arr, b => ('0' + b.toString(16)).slice(-2)).join('');
 }
 
-function spotifyExtractToken(url) {
+/* Base64url encode */
+function spB64(buf) {
+  return btoa(String.fromCharCode(...new Uint8Array(buf)))
+    .replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+}
+
+/* Launch PKCE auth */
+async function spotifyLogin() {
+  const verifier  = spRandom(32);
+  const challenge = spB64(await crypto.subtle.digest('SHA-256',
+    new TextEncoder().encode(verifier)));
+  sessionStorage.setItem('sp_verifier', verifier);
+
+  const params = new URLSearchParams({
+    response_type:         'code',
+    client_id:             SP_CLIENT_ID,
+    scope:                 'user-modify-playback-state',
+    redirect_uri:          SP_REDIRECT,
+    code_challenge_method: 'S256',
+    code_challenge:        challenge,
+    show_dialog:           'true',
+  });
+  window.location.href = 'https://accounts.spotify.com/authorize?' + params.toString();
+}
+
+/* Exchange code for token after redirect back */
+async function spotifyHandleCallback() {
+  const params   = new URLSearchParams(window.location.search);
+  const code     = params.get('code');
+  const verifier = sessionStorage.getItem('sp_verifier');
+  if (!code || !verifier) return;
+
+  // Clean URL
+  window.history.replaceState({}, '', SP_REDIRECT);
+  sessionStorage.removeItem('sp_verifier');
+
   const st = document.getElementById('spotify-status');
-  if (!url.includes('access_token=')) {
-    st.textContent = '';
-    return;
-  }
+  if (st) { st.textContent = '⏳ Connexion Spotify en cours…'; st.style.color = 'var(--sky)'; }
+
   try {
-    // Parse token from URL hash or query string
-    const hash = url.includes('#') ? url.split('#')[1] : url.split('?')[1];
-    const params = new URLSearchParams(hash);
-    const token = params.get('access_token');
-    if (token) {
-      SPOTIFY_TOKEN = token;
-      document.getElementById('spotify-token').value = token;
-      st.textContent = '✓ Token extrait ! Bouton ⏸/▶ opérationnel.';
-      st.style.color = 'var(--sky)';
-      // Clear the URL field for security
-      setTimeout(() => {
-        document.getElementById('sp-redirect-url').value = '✓ Token enregistré';
-        document.getElementById('sp-redirect-url').style.color = 'var(--sky)';
-      }, 800);
+    const res = await fetch('https://accounts.spotify.com/api/token', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type:    'authorization_code',
+        code,
+        redirect_uri:  SP_REDIRECT,
+        client_id:     SP_CLIENT_ID,
+        code_verifier: verifier,
+      }),
+    });
+    const data = await res.json();
+    if (data.access_token) {
+      SPOTIFY_TOKEN = data.access_token;
+      if (st) { st.textContent = '✓ Spotify connecté ! Bouton ⏸/▶ opérationnel.'; st.style.color = 'var(--sky)'; }
     } else {
-      st.textContent = '⚠ Token non trouvé dans l\'URL — réessayez';
-      st.style.color = 'var(--rose)';
+      if (st) { st.textContent = '⚠ Erreur auth : ' + (data.error || 'inconnue'); st.style.color = 'var(--rose)'; }
     }
   } catch(e) {
-    st.textContent = '⚠ URL non reconnue';
-    st.style.color = 'var(--rose)';
+    if (st) { st.textContent = '⚠ Erreur réseau lors de la connexion'; st.style.color = 'var(--rose)'; }
   }
 }
 
-function spotifyTokenChange(val) {
-  SPOTIFY_TOKEN = val.trim();
-}
+/* Called on page load — picks up the ?code= from Spotify redirect */
+window.addEventListener('load', () => {
+  if (window.location.search.includes('code=')) {
+    // Open GM panel so status is visible
+    document.getElementById('gm-panel').classList.add('open');
+    spotifyHandleCallback();
+  }
+});
+
+function spotifyTokenChange(val) { SPOTIFY_TOKEN = val.trim(); }
+function spotifyExtractToken()   {}  // kept for compat, unused
 
 async function spotifyCall(endpoint, method='PUT') {
   if (!SPOTIFY_TOKEN) return;
@@ -1209,14 +1233,15 @@ async function spotifyCall(endpoint, method='PUT') {
       headers: { 'Authorization': 'Bearer ' + SPOTIFY_TOKEN }
     });
     const st = document.getElementById('spotify-status');
+    if (!st) return;
     if (res.status === 204 || res.status === 200) {
       st.textContent = endpoint === 'pause' ? '⏸ Spotify en pause' : '▶ Spotify en lecture';
       st.style.color = endpoint === 'pause' ? 'var(--rose)' : 'var(--sky)';
     } else if (res.status === 401) {
-      st.textContent = '⚠ Token expiré — refaites l\'étape ②';
-      st.style.color = 'var(--rose)';
+      st.textContent = '⚠ Token expiré — recliquez "Se connecter à Spotify"';
+      st.style.color = 'var(--rose)'; SPOTIFY_TOKEN = '';
     } else if (res.status === 403) {
-      st.textContent = '⚠ Compte Premium requis';
+      st.textContent = '⚠ Compte Spotify Premium requis';
       st.style.color = 'var(--rose)';
     } else if (res.status === 404) {
       st.textContent = '⚠ Ouvrez Spotify sur la tablette et lancez une musique';
